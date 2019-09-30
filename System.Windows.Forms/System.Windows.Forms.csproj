@@ -150,12 +150,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>keyboards.resx</DependentUpon>
     </Compile>
+    <Compile Update="resources\System.Windows.Forms.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>System.Windows.Forms.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="resources\keyboards.resx">
       <LastGenOutput>keyboards.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="resources\System.Windows.Forms.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>System.Windows.Forms.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

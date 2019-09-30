@@ -75,12 +75,12 @@ namespace System.Windows.Forms {
 
 			SetStyle (ControlStyles.StandardClick | ControlStyles.StandardDoubleClick, false);
 
-			undo = new MenuItem(Locale.GetText("&Undo"));
-			cut = new MenuItem(Locale.GetText("Cu&t"));
-			copy = new MenuItem(Locale.GetText("&Copy"));
-			paste = new MenuItem(Locale.GetText("&Paste"));
-			delete = new MenuItem(Locale.GetText("&Delete"));
-			select_all = new MenuItem(Locale.GetText("Select &All"));
+			undo = new MenuItem(System.Windows.Forms.resources.System_Windows_Forms._Undo);
+			cut = new MenuItem(System.Windows.Forms.resources.System_Windows_Forms.Cu_t);
+			copy = new MenuItem(System.Windows.Forms.resources.System_Windows_Forms._Copy);
+			paste = new MenuItem(System.Windows.Forms.resources.System_Windows_Forms._Paste);
+			delete = new MenuItem(System.Windows.Forms.resources.System_Windows_Forms._Delete);
+			select_all = new MenuItem(System.Windows.Forms.resources.System_Windows_Forms.Select__All);
 
 			menu = new ContextMenu(new MenuItem[] { undo, new MenuItem("-"), cut, copy, paste, delete, new MenuItem("-"), select_all});
 			ContextMenu = menu;
