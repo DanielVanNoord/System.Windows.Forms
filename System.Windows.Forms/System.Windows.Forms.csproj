@@ -9,6 +9,126 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="resources\1-up.png" />
+    <None Remove="resources\16_computer.png" />
+    <None Remove="resources\16_dialog-error.png" />
+    <None Remove="resources\16_dialog-information.png" />
+    <None Remove="resources\16_dialog-warning.png" />
+    <None Remove="resources\16_document-open.png" />
+    <None Remove="resources\16_folder-remote.png" />
+    <None Remove="resources\16_folder.png" />
+    <None Remove="resources\16_printer.png" />
+    <None Remove="resources\16_user-desktop.png" />
+    <None Remove="resources\16_user-home.png" />
+    <None Remove="resources\2-up.png" />
+    <None Remove="resources\22_page-magnifier.png" />
+    <None Remove="resources\3-up.png" />
+    <None Remove="resources\32_computer.png" />
+    <None Remove="resources\32_document-open.png" />
+    <None Remove="resources\32_folder-remote.png" />
+    <None Remove="resources\32_printer.png" />
+    <None Remove="resources\32_user-desktop.png" />
+    <None Remove="resources\32_user-home.png" />
+    <None Remove="resources\4-up.png" />
+    <None Remove="resources\6-up.png" />
+    <None Remove="resources\computer.png" />
+    <None Remove="resources\DnDCopy.cur" />
+    <None Remove="resources\DnDLink.cur" />
+    <None Remove="resources\DnDMove.cur" />
+    <None Remove="resources\DnDNo.cur" />
+    <None Remove="resources\document-open.png" />
+    <None Remove="resources\errorProvider.ico" />
+    <None Remove="resources\EventsTab.bmp" />
+    <None Remove="resources\folder-new.png" />
+    <None Remove="resources\folder-remote.png" />
+    <None Remove="resources\folder.png" />
+    <None Remove="resources\go-previous.png" />
+    <None Remove="resources\go-top.png" />
+    <None Remove="resources\image-missing.png" />
+    <None Remove="resources\image-x-generic.png" />
+    <None Remove="resources\keyboards.resources.prebuilt" />
+    <None Remove="resources\mono.ico" />
+    <None Remove="resources\nav_delete.png" />
+    <None Remove="resources\nav_end.png" />
+    <None Remove="resources\nav_first.png" />
+    <None Remove="resources\nav_next.png" />
+    <None Remove="resources\nav_plus.png" />
+    <None Remove="resources\nav_previous.png" />
+    <None Remove="resources\NESW.cur" />
+    <None Remove="resources\NWSE.cur" />
+    <None Remove="resources\preferences-system-windows.png" />
+    <None Remove="resources\PropertiesTab.bmp" />
+    <None Remove="resources\propertygrid-alphabetical.png" />
+    <None Remove="resources\propertygrid-categorized.png" />
+    <None Remove="resources\propertygrid-propertypages.png" />
+    <None Remove="resources\SplitterNS.cur" />
+    <None Remove="resources\SplitterWE.cur" />
+    <None Remove="resources\text-x-generic.png" />
+    <None Remove="resources\user-desktop.png" />
+    <None Remove="resources\user-home.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="resources\1-up.png" />
+    <EmbeddedResource Include="resources\16_computer.png" />
+    <EmbeddedResource Include="resources\16_dialog-error.png" />
+    <EmbeddedResource Include="resources\16_dialog-information.png" />
+    <EmbeddedResource Include="resources\16_dialog-warning.png" />
+    <EmbeddedResource Include="resources\16_document-open.png" />
+    <EmbeddedResource Include="resources\16_folder-remote.png" />
+    <EmbeddedResource Include="resources\16_folder.png" />
+    <EmbeddedResource Include="resources\16_printer.png" />
+    <EmbeddedResource Include="resources\16_user-desktop.png" />
+    <EmbeddedResource Include="resources\16_user-home.png" />
+    <EmbeddedResource Include="resources\2-up.png" />
+    <EmbeddedResource Include="resources\22_page-magnifier.png" />
+    <EmbeddedResource Include="resources\3-up.png" />
+    <EmbeddedResource Include="resources\32_computer.png" />
+    <EmbeddedResource Include="resources\32_document-open.png" />
+    <EmbeddedResource Include="resources\32_folder-remote.png" />
+    <EmbeddedResource Include="resources\32_printer.png" />
+    <EmbeddedResource Include="resources\32_user-desktop.png" />
+    <EmbeddedResource Include="resources\32_user-home.png" />
+    <EmbeddedResource Include="resources\4-up.png" />
+    <EmbeddedResource Include="resources\6-up.png" />
+    <EmbeddedResource Include="resources\computer.png" />
+    <EmbeddedResource Include="resources\DnDCopy.cur" />
+    <EmbeddedResource Include="resources\DnDLink.cur" />
+    <EmbeddedResource Include="resources\DnDMove.cur" />
+    <EmbeddedResource Include="resources\DnDNo.cur" />
+    <EmbeddedResource Include="resources\document-open.png" />
+    <EmbeddedResource Include="resources\errorProvider.ico" />
+    <EmbeddedResource Include="resources\EventsTab.bmp" />
+    <EmbeddedResource Include="resources\folder-new.png" />
+    <EmbeddedResource Include="resources\folder-remote.png" />
+    <EmbeddedResource Include="resources\folder.png" />
+    <EmbeddedResource Include="resources\go-previous.png" />
+    <EmbeddedResource Include="resources\go-top.png" />
+    <EmbeddedResource Include="resources\image-missing.png" />
+    <EmbeddedResource Include="resources\image-x-generic.png" />
+    <EmbeddedResource Include="resources\keyboards.resources.prebuilt" />
+    <EmbeddedResource Include="resources\mono.ico" />
+    <EmbeddedResource Include="resources\nav_delete.png" />
+    <EmbeddedResource Include="resources\nav_end.png" />
+    <EmbeddedResource Include="resources\nav_first.png" />
+    <EmbeddedResource Include="resources\nav_next.png" />
+    <EmbeddedResource Include="resources\nav_plus.png" />
+    <EmbeddedResource Include="resources\nav_previous.png" />
+    <EmbeddedResource Include="resources\NESW.cur" />
+    <EmbeddedResource Include="resources\NWSE.cur" />
+    <EmbeddedResource Include="resources\preferences-system-windows.png" />
+    <EmbeddedResource Include="resources\PropertiesTab.bmp" />
+    <EmbeddedResource Include="resources\propertygrid-alphabetical.png" />
+    <EmbeddedResource Include="resources\propertygrid-categorized.png" />
+    <EmbeddedResource Include="resources\propertygrid-propertypages.png" />
+    <EmbeddedResource Include="resources\SplitterNS.cur" />
+    <EmbeddedResource Include="resources\SplitterWE.cur" />
+    <EmbeddedResource Include="resources\text-x-generic.png" />
+    <EmbeddedResource Include="resources\user-desktop.png" />
+    <EmbeddedResource Include="resources\user-home.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Accessibility" Version="4.6.0-preview3-27504-2" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="4.6.0" />
     <PackageReference Include="Mono.Posix.NETStandard" Version="1.0.0" />
@@ -22,6 +142,21 @@
   <ItemGroup>
     <ProjectReference Include="..\Mono.Types\Mono.Types.csproj" />
     <ProjectReference Include="..\Mono.WebBrowser\Mono.WebBrowser.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="resources\keyboards.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>keyboards.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="resources\keyboards.resx">
+      <LastGenOutput>keyboards.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

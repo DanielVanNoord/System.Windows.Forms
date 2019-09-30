@@ -753,7 +753,7 @@ namespace System.Windows.Forms {
 							if (maxval < layouts.scan_table [(int) layout.ScanIndex].Length)
 								scan = layouts.scan_table [(int) layout.ScanIndex][maxval];
 							if (maxval < layouts.vkey_table [(int) layout.VKeyIndex].Length)
-								vkey = layouts.vkey_table [(int) layout.VKeyIndex][maxval];
+								vkey = (int)layouts.vkey_table [(int) layout.VKeyIndex][maxval];
 						}
 					}
 				}
