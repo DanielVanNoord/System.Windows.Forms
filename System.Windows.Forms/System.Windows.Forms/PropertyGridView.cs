@@ -600,7 +600,7 @@ namespace System.Windows.Forms.PropertyGridInternal {
 				font = bold_font;
 				brush = SystemBrushes.ControlText;
 
-				pevent.Graphics.DrawString (grid_item.Label, font, brush, rect.X + 1, rect.Y + ENTRY_SPACING);
+				pevent.Graphics.SafeDrawString (grid_item.Label, font, brush, rect.X + 1, rect.Y + ENTRY_SPACING);
 				if (grid_item == this.SelectedGridItem) {
 					SizeF size = pevent.Graphics.MeasureString (grid_item.Label, font);
 					ControlPaint.DrawFocusRectangle (pevent.Graphics, new Rectangle (rect.X + 1, rect.Y+ENTRY_SPACING, (int)size.Width, (int)size.Height));
@@ -621,7 +621,7 @@ namespace System.Windows.Forms.PropertyGridInternal {
 					brush = grid_item.IsReadOnly ? inactive_text_brush : SystemBrushes.ControlText;
 				}
 			}
-			pevent.Graphics.DrawString (grid_item.Label, font, brush,
+			pevent.Graphics.SafeDrawString (grid_item.Label, font, brush,
 						    new Rectangle (rect.X + 1, rect.Y + ENTRY_SPACING, rect.Width - ENTRY_SPACING, rect.Height - ENTRY_SPACING),
 						    string_format);
 		}
@@ -653,7 +653,7 @@ namespace System.Windows.Forms.PropertyGridInternal {
 				else
 					valueText = grid_item.ValueText;
 			}
-			pevent.Graphics.DrawString (valueText, font,
+			pevent.Graphics.SafeDrawString (valueText, font,
 						    brush,
 						    new RectangleF (xLoc + ENTRY_SPACING, rect.Y + ENTRY_SPACING,
 								    ClientRectangle.Width-(xLoc), row_height - ENTRY_SPACING*2), 

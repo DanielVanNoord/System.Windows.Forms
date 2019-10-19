@@ -966,7 +966,7 @@ namespace System.Windows.Forms
 				ControlPaint.DrawBorder (g, outerrect, Color.Black, ButtonBorderStyle.Solid);
 				ControlPaint.DrawBorder (g, innerrect, SystemColors.ControlDark, ButtonBorderStyle.Dashed);
 
-				g.DrawString (sb.ToString (), font, Brushes.Black,
+				g.SafeDrawString (sb.ToString (), font, Brushes.Black,
 								new RectangleF (innerrect.X + 2,
 											innerrect.Y + 2,
 											innerrect.Width - 4,

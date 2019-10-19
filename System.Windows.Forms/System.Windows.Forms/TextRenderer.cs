@@ -194,7 +194,7 @@ namespace System.Windows.Forms
 
 				dc.ReleaseHdc ();
 			}
-			// Use Graphics.DrawString as a fallback method
+			// Use Graphics.SafeDrawString as a fallback method
 			else {
 				Graphics g;
 				IntPtr hdc = IntPtr.Zero;
@@ -210,7 +210,7 @@ namespace System.Windows.Forms
 
 				Rectangle new_bounds = PadDrawStringRectangle (bounds, flags);
 
-				g.DrawString (text, font, ThemeEngine.Current.ResPool.GetSolidBrush (foreColor), new_bounds, sf);
+				g.SafeDrawString (text, font, ThemeEngine.Current.ResPool.GetSolidBrush (foreColor), new_bounds, sf);
 
 				if (!(dc is Graphics)) {
 					g.Dispose ();

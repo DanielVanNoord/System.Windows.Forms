@@ -1026,9 +1026,9 @@ namespace System.Windows.Forms {
 
 					if (i == highlighted_idx) {
 						g.FillRectangle (SystemBrushes.Highlight, item_bounds);
-						g.DrawString (owner.auto_complete_matches [i], Font, SystemBrushes.HighlightText, item_bounds);
+						g.SafeDrawString (owner.auto_complete_matches [i], Font, SystemBrushes.HighlightText, item_bounds);
 					} else 
-						g.DrawString (owner.auto_complete_matches [i], Font, brush, item_bounds);
+						g.SafeDrawString (owner.auto_complete_matches [i], Font, brush, item_bounds);
 
 					y += item_height;
 				}

@@ -299,7 +299,7 @@ namespace System.Windows.Forms
 			textBounds.Height -= offset_y;
 
 			string_format.FormatFlags |= StringFormatFlags.NoWrap;
-			g.DrawString (text, DataGridTableStyle.DataGrid.Font, foreBrush, textBounds, string_format);
+			g.SafeDrawString (text, DataGridTableStyle.DataGrid.Font, foreBrush, textBounds, string_format);
 			
 		}
 		
