@@ -1,4 +1,4 @@
-static class AssemblyRef
+static public class AssemblyRef
 {
 	// FIXME
 	internal const string SystemConfiguration = "System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a";

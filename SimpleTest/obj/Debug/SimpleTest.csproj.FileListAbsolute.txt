@@ -1,0 +1,8 @@
+C:\Temp\MonoForms\SimpleTest\bin\Debug\SimpleTest.exe.config
+C:\Temp\MonoForms\SimpleTest\bin\Debug\SimpleTest.exe
+C:\Temp\MonoForms\SimpleTest\bin\Debug\SimpleTest.pdb
+C:\Temp\MonoForms\SimpleTest\obj\Debug\SimpleTest.csprojAssemblyReference.cache
+C:\Temp\MonoForms\SimpleTest\obj\Debug\SimpleTest.Properties.Resources.resources
+C:\Temp\MonoForms\SimpleTest\obj\Debug\SimpleTest.csproj.GenerateResource.cache
+C:\Temp\MonoForms\SimpleTest\obj\Debug\SimpleTest.exe
+C:\Temp\MonoForms\SimpleTest\obj\Debug\SimpleTest.pdb

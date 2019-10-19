@@ -25,6 +25,8 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace System.Windows.Forms.Theming.Default
 {
@@ -34,14 +36,15 @@ namespace System.Windows.Forms.Theming.Default
 		{
 		}
 
-		public virtual void Draw (Graphics dc, Rectangle client_rectangle, Label label) 
+		public virtual void Draw(Graphics dc, Rectangle client_rectangle, Label label)
 		{
 			Rectangle rect = label.PaddingClientRectangle;
 
-			label.DrawImage (dc, label.Image, rect, label.ImageAlign);
+			label.DrawImage(dc, label.Image, rect, label.ImageAlign);
+
 
 			if (label.Enabled) {
-				dc.DrawString (label.Text, label.Font,
+				dc.SafeDrawString (label.Text, label.Font,
 					ThemeEngine.Current.ResPool.GetSolidBrush (label.ForeColor),
 					rect, label.string_format);
 			} else {

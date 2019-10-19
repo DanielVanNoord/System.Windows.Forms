@@ -9,7 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mono.Types", "Mono.Types\Mo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mono.WebBrowser", "Mono.WebBrowser\Mono.WebBrowser.csproj", "{14B77816-C8CB-4CB7-91CC-2C1C878E5544}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestForms", "TestForms\TestForms.csproj", "{ED38256A-461A-4A6E-B01B-894A86DF2087}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestForms", "TestForms\TestForms.csproj", "{ED38256A-461A-4A6E-B01B-894A86DF2087}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Drawing.Design", "System.Drawing.Design\System.Drawing.Design.csproj", "{178B2013-A8AC-414B-8BA2-EC56D4A118F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTest", "SimpleTest\SimpleTest.csproj", "{66A6027B-15E8-4834-857B-35A10C83C304}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{ED38256A-461A-4A6E-B01B-894A86DF2087}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED38256A-461A-4A6E-B01B-894A86DF2087}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED38256A-461A-4A6E-B01B-894A86DF2087}.Release|Any CPU.Build.0 = Release|Any CPU
+		{178B2013-A8AC-414B-8BA2-EC56D4A118F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{178B2013-A8AC-414B-8BA2-EC56D4A118F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{178B2013-A8AC-414B-8BA2-EC56D4A118F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{178B2013-A8AC-414B-8BA2-EC56D4A118F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66A6027B-15E8-4834-857B-35A10C83C304}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66A6027B-15E8-4834-857B-35A10C83C304}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66A6027B-15E8-4834-857B-35A10C83C304}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66A6027B-15E8-4834-857B-35A10C83C304}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

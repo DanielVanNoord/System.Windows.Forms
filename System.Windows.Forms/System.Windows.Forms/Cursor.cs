@@ -169,7 +169,19 @@ namespace System.Windows.Forms {
 					return;
 				}
 			}
-			throw new FileNotFoundException ("Resource name was not found: `" + resource + "'");
+
+            // Try a different way, previous failed
+
+            using (Stream s = Assembly.GetExecutingAssembly().GetManifestResourceStream("System.Windows.Forms.resources." + resource))
+            {
+
+                if (s != null)
+                {
+                    CreateCursor(s);
+                    return;
+                }
+            }
+            throw new FileNotFoundException ("Resource name was not found: `" + resource + "'");
 		}
 		#endregion	// Public Constructors
 
