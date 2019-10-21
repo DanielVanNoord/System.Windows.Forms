@@ -31,28 +31,38 @@ using System.IO;
 using System.Collections;
 
 namespace System.Resources {
-	public class ResXResourceSet : Mono.Resources.ResourceSet
+	public class ResXResourceSet : ResourceSet
     {
 		#region Local Variables
 
 		#endregion	// Local Variables
 
 		#region Public Constructors
-		public ResXResourceSet(Stream stream) {
-			this.Reader = new ResXResourceReader(stream);
-			this.Table = new Hashtable();
+		public ResXResourceSet(Stream stream) : base(stream) {
 			this.ReadResources();
 		}
 
-		public ResXResourceSet(string fileName) {
-			this.Reader = new ResXResourceReader(fileName);
-			this.Table = new Hashtable();
+		public ResXResourceSet(string fileName) : base(fileName) {
 			this.ReadResources();
 		}
-		#endregion	// Public Constructors
 
-		#region Public Instance Methods
-		public override Type GetDefaultReader() {
+        /*public ResXResourceSet(Stream stream)
+        {
+            this.Reader = new ResXResourceReader(stream);
+            this.Table = new Hashtable();
+            this.ReadResources();
+        }
+
+        public ResXResourceSet(string fileName)
+        {
+            this.Reader = new ResXResourceReader(fileName);
+            this.Table = new Hashtable();
+            this.ReadResources();
+        }*/
+        #endregion // Public Constructors
+
+        #region Public Instance Methods
+        public override Type GetDefaultReader() {
 			return typeof(ResXResourceReader);
 		}
 

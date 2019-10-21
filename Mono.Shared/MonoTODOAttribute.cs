@@ -35,7 +35,7 @@
 namespace System {
 #pragma warning disable 436
 	[AttributeUsage (AttributeTargets.All, AllowMultiple=true)]
-	public class MonoTODOAttribute : Attribute {
+	internal class MonoTODOAttribute : Attribute {
 
 		string comment;
 		
@@ -54,7 +54,7 @@ namespace System {
 	}
 
 	[AttributeUsage (AttributeTargets.All, AllowMultiple=true)]
-    public class MonoDocumentationNoteAttribute : MonoTODOAttribute {
+	internal class MonoDocumentationNoteAttribute : MonoTODOAttribute {
 
 		public MonoDocumentationNoteAttribute (string comment)
 			: base (comment)
@@ -63,7 +63,7 @@ namespace System {
 	}
 
 	[AttributeUsage (AttributeTargets.All, AllowMultiple=true)]
-    public class MonoExtensionAttribute : MonoTODOAttribute {
+	internal class MonoExtensionAttribute : MonoTODOAttribute {
 
 		public MonoExtensionAttribute (string comment)
 			: base (comment)
@@ -72,7 +72,7 @@ namespace System {
 	}
 
 	[AttributeUsage (AttributeTargets.All, AllowMultiple=true)]
-    public class MonoInternalNoteAttribute : MonoTODOAttribute {
+	internal class MonoInternalNoteAttribute : MonoTODOAttribute {
 
 		public MonoInternalNoteAttribute (string comment)
 			: base (comment)
@@ -81,7 +81,7 @@ namespace System {
 	}
 
 	[AttributeUsage (AttributeTargets.All, AllowMultiple=true)]
-    public class MonoLimitationAttribute : MonoTODOAttribute {
+	internal class MonoLimitationAttribute : MonoTODOAttribute {
 
 		public MonoLimitationAttribute (string comment)
 			: base (comment)
@@ -90,7 +90,7 @@ namespace System {
 	}
 
 	[AttributeUsage (AttributeTargets.All, AllowMultiple=true)]
-    public class MonoNotSupportedAttribute : MonoTODOAttribute {
+	internal class MonoNotSupportedAttribute : MonoTODOAttribute {
 
 		public MonoNotSupportedAttribute (string comment)
 			: base (comment)

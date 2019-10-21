@@ -1,4 +1,4 @@
-#if !MOBILE
+#if !MOBILE || MOBILE_DESKTOP_HOST
 
 using System.Diagnostics;
 using System.IO;
@@ -8,7 +8,7 @@ using System.Text;
 
 namespace System {
 
-    public static class MonoToolsLocator
+	static class MonoToolsLocator
 	{
 		public static readonly string Mono;
 		public static readonly string McsCSharpCompiler;

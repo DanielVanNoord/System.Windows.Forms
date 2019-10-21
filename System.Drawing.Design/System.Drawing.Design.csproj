@@ -20,7 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Mono.Types\Mono.Types.csproj" />
+    <Compile Include="..\Mono.Shared\AssemblyRef.cs" Link="AssemblyRef.cs" />
+    <Compile Include="..\Mono.Shared\Consts.cs" Link="Consts.cs" />
   </ItemGroup>
 
   <ItemGroup>

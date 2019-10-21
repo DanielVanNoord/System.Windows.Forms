@@ -5,15 +5,15 @@ VisualStudioVersion = 16.0.29318.209
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Windows.Forms", "System.Windows.Forms\System.Windows.Forms.csproj", "{A0901720-DC8F-42EA-A80A-FA4725F11147}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mono.Types", "Mono.Types\Mono.Types.csproj", "{B6752F64-16F4-42A7-AD37-7D9235C6761E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mono.WebBrowser", "Mono.WebBrowser\Mono.WebBrowser.csproj", "{14B77816-C8CB-4CB7-91CC-2C1C878E5544}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestForms", "TestForms\TestForms.csproj", "{ED38256A-461A-4A6E-B01B-894A86DF2087}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Drawing.Design", "System.Drawing.Design\System.Drawing.Design.csproj", "{178B2013-A8AC-414B-8BA2-EC56D4A118F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTest", "SimpleTest\SimpleTest.csproj", "{66A6027B-15E8-4834-857B-35A10C83C304}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTest", "SimpleTest\SimpleTest.csproj", "{66A6027B-15E8-4834-857B-35A10C83C304}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mono.Types", "Mono.Types\Mono.Types.csproj", "{BF10E833-4A53-43F8-84BE-A159F99A82DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +25,6 @@ Global
 		{A0901720-DC8F-42EA-A80A-FA4725F11147}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0901720-DC8F-42EA-A80A-FA4725F11147}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0901720-DC8F-42EA-A80A-FA4725F11147}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B6752F64-16F4-42A7-AD37-7D9235C6761E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6752F64-16F4-42A7-AD37-7D9235C6761E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6752F64-16F4-42A7-AD37-7D9235C6761E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6752F64-16F4-42A7-AD37-7D9235C6761E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{14B77816-C8CB-4CB7-91CC-2C1C878E5544}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{14B77816-C8CB-4CB7-91CC-2C1C878E5544}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14B77816-C8CB-4CB7-91CC-2C1C878E5544}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +41,10 @@ Global
 		{66A6027B-15E8-4834-857B-35A10C83C304}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66A6027B-15E8-4834-857B-35A10C83C304}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66A6027B-15E8-4834-857B-35A10C83C304}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF10E833-4A53-43F8-84BE-A159F99A82DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF10E833-4A53-43F8-84BE-A159F99A82DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF10E833-4A53-43F8-84BE-A159F99A82DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF10E833-4A53-43F8-84BE-A159F99A82DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

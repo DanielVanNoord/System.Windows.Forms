@@ -1,9 +1,13 @@
 .vs/
 TestForms/bin/
 TestForms/obj/
+SimpleTest/bin/
+SimpleTest/obj/
 Mono.Types/bin/
 Mono.Types/obj/
 Mono.WebBrowser/bin/
 Mono.WebBrowser/obj/
 System.Windows.Forms/bin/
 System.Windows.Forms/obj/
+System.Drawing.Design/bin/
+System.Drawing.Design/obj/

@@ -4,8 +4,4 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Mono.Types\Mono.Types.csproj" />
-  </ItemGroup>
-
 </Project>

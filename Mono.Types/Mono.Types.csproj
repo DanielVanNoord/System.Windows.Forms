@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Include="..\Mono.Shared\MonoTODOAttribute.cs" Link="MonoTODOAttribute.cs" />
+  </ItemGroup>
+
 </Project>
