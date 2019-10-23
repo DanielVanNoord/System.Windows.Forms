@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\SimpleTest\Form1.cs" Link="Form1.cs" />
+    <Compile Include="..\SimpleTest\Form1.Designer.cs" Link="Form1.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\SimpleTest\Form1.resx" Link="Form1.resx" />
+  </ItemGroup>
+
+</Project>
