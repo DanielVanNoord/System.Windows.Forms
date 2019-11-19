@@ -12,6 +12,7 @@
     <Company>None</Company>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
     <Version>1.0.0-alpha1</Version>
+    <PackageId>Core.System.Drawing.Design</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
