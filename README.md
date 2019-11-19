@@ -1,4 +1,4 @@
-# System.Windows.Forms for .Net Core running Windows and Linux
+# System.Windows.Forms for .Net Core running on Windows and Linux
 This is a early stage and highly experimental port of Mono's System.Windows.Forms and a few additional libraries to .Net Core 3.0. This allows Winforms code to run on both Windows and Linux (and possibly MacOS in the future).
 
 Rather then porting Mono's implementation of System.Drawing to .Net Core 3.0 I ported Mono's System.Windows.Forms onto System.Drawing.Common. Note that on Linux you will need some native libraries.
@@ -23,7 +23,7 @@ More samples are coming soon TM. This will include more complex forms and more d
 I tested the SimpleTest example on Windows, Raspbian Buster and Kubuntu 19.10 using .Net Core 3.0 Release.
 
 # Future Work
-Unknown right now. I will likely add more samples as I go. If Mono adds support for Mac 64 bit I will port that over.
+Unknown right now. I will likely add more samples and fix issues as I go. If Mono adds support for Mac 64 bit I will port that over.
 
 I will add better Linux documentation as I have time.
 
