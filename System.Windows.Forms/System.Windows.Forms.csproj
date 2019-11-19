@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -256,7 +256,6 @@
     <PackageReference Include="Accessibility" Version="4.6.0-preview3-27504-2" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="4.6.0" />
     <PackageReference Include="Mono.Posix.NETStandard" Version="1.0.0" />
-    <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="System.Drawing.Common" Version="4.7.0-preview1.19504.10" />
     <PackageReference Include="System.Resources.Extensions" Version="4.6.0" />
     <PackageReference Include="System.Security.Permissions" Version="4.6.0" />
@@ -264,7 +263,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Mono.Types\Mono.Types.csproj" />
     <ProjectReference Include="..\Mono.WebBrowser\Mono.WebBrowser.csproj" />
     <ProjectReference Include="..\System.Drawing.Design\System.Drawing.Design.csproj" />
   </ItemGroup>
