@@ -1,4 +1,4 @@
-My Contrubutions:
+My Contributions:
 
 Copyright 2019 Daniel Van Noord
 
@@ -8,8 +8,14 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+
+
 The Mono Code (https://github.com/mono/mono/blob/master/LICENSE) copyrights are in the Mono Files
+
 In general, the runtime and its class libraries are licensed under the
+
 terms of the MIT license, and some third party code is licensed under
-the 3-clause BSD license.  See the file "PATENTS.TXT" for Microsoft's
+
+the 3-clause BSD license. See the file "PATENTS.TXT" for Microsoft's
+
 patent grant on the Mono codebase.
