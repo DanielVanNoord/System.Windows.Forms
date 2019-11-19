@@ -16,11 +16,8 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 
 // General Information about the System.Windows.Forms assembly
-
-[assembly: AssemblyDescription ("System.Windows.Forms.dll")]
 [assembly: AssemblyDefaultAlias ("System.Windows.Forms.dll")]
 
-[assembly: AssemblyCopyright (Consts.MonoCopyright)]
 [assembly: SatelliteContractVersion (Consts.FxVersion)]
 
 [assembly: CLSCompliant (true)]

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -6,6 +6,17 @@
 
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Copyright>(c) Various Mono authors, Daniel Van Noord 2019</Copyright>
+    <Description>A .Net Core implementation of the Mono System.Windows.Forms library. This is built on top of System.Drawing.Common.</Description>
+    <Authors>Various Mono authors, Daniel Van Noord</Authors>
+    <PackageProjectUrl>https://github.com/DanielVanNoord/System.Windows.Forms</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/DanielVanNoord/System.Windows.Forms</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Company>None</Company>
+    <PackageLicenseExpression></PackageLicenseExpression>
+    <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
+    <PackageLicenseFile>License.txt</PackageLicenseFile>
+    <Version>1.0.0-alpha1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -66,6 +77,10 @@
     <None Remove="resources\text-x-generic.png" />
     <None Remove="resources\user-desktop.png" />
     <None Remove="resources\user-home.png" />
+    <None Include="..\License.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
