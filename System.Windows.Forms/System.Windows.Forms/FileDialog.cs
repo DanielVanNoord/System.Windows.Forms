@@ -1492,7 +1492,7 @@ namespace System.Windows.Forms
 						text_rect = new Rectangle (t_x, t_y, t_w, t_h);
 					}
 					
-					gr.SafeDrawString (Text, Font, Brushes.White, text_rect, text_format);
+					gr.DrawString (Text, Font, Brushes.White, text_rect, text_format);
 				}
 				
 				switch (popupButtonState) {
@@ -2096,7 +2096,7 @@ namespace System.Windows.Forms
 				}
 			}
 
-			gr.SafeDrawString (dcbi.Name, e.Font , ThemeEngine.Current.ResPool.GetSolidBrush (foreColor), new Point (24 + xPos, (bmp.Height - e.Font.Height) / 2));
+			gr.DrawString (dcbi.Name, e.Font , ThemeEngine.Current.ResPool.GetSolidBrush (foreColor), new Point (24 + xPos, (bmp.Height - e.Font.Height) / 2));
 			gr.DrawImage (dcbi.ImageList.Images [dcbi.ImageIndex], new Rectangle (new Point (xPos + 2, 0), new Size (16, 16)));
 			
 			e.Graphics.DrawImage (bmp, e.Bounds.X, e.Bounds.Y);

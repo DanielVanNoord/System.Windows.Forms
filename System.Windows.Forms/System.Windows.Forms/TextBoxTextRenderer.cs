@@ -72,9 +72,9 @@ namespace System.Windows.Forms
 		{
 			if (!use_textrenderer) {
 				if (showNonPrint)
-					g.SafeDrawString (text, font, ThemeEngine.Current.ResPool.GetSolidBrush (color), x, y, sf_nonprinting);
+					g.DrawString (text, font, ThemeEngine.Current.ResPool.GetSolidBrush (color), x, y, sf_nonprinting);
 				else
-					g.SafeDrawString (text, font, ThemeEngine.Current.ResPool.GetSolidBrush (color), x, y, sf_printing);
+					g.DrawString (text, font, ThemeEngine.Current.ResPool.GetSolidBrush (color), x, y, sf_printing);
 			} else {
 				if (showNonPrint)
 					TextRenderer.DrawTextInternal (g, text, font, new Rectangle (new Point ((int)x, (int)y), max_size), color, TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix, false);

@@ -238,7 +238,7 @@ namespace System.Windows.Forms.PropertyGridInternal
 
 		private void dialog_button_Paint(object sender, PaintEventArgs e) {
 			// best way to draw the ellipse?
-			e.Graphics.SafeDrawString("...", new Font(Font,FontStyle.Bold), Brushes.Black, 0,0);
+			e.Graphics.DrawString("...", new Font(Font,FontStyle.Bold), Brushes.Black, 0,0);
 		}
 
 		private void dropdown_button_Click(object sender, EventArgs e) {

@@ -92,8 +92,7 @@ namespace System.Windows.Forms {
 			}
 		}
 
-		public virtual string 
-            KeyboardShortcut {
+		public virtual string KeyboardShortcut {
 			get {
 				return keyboard_shortcut;
 			}

@@ -725,7 +725,7 @@ namespace System.Windows.Forms {
 				if (!hwnd.nc_expose_pending && hwnd.visible) {
 					MSG msg = new MSG ();
 					Region rgn = new Region (hwnd.Invalid);
-					IntPtr hrgn = rgn.GetHrgn (Graphics.FromImage(new Bitmap(1,1))); // Graphics object isn't needed
+					IntPtr hrgn = rgn.GetHrgn (null); // Graphics object isn't needed
 					msg.message = Msg.WM_NCPAINT;
 					msg.wParam = hrgn == IntPtr.Zero ? (IntPtr)1 : hrgn;
 					msg.refobject = rgn;
@@ -838,7 +838,6 @@ namespace System.Windows.Forms {
 		}
 
 		//TODO: Map our internal formats to the right os code where we can
-        //This is bigger then an int on 64 bit OSX
 		internal override int ClipboardGetID(IntPtr handle, string format) {
 			return (int)__CFStringMakeConstantString (format);
 		}

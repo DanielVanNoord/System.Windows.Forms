@@ -60,9 +60,7 @@ namespace System.Windows.Forms {
 
 		#region Static Methods
 		public static string GetText (string msg) {
-            
-
-            string ret = ResourceManager.GetString (msg);
+			string ret = ResourceManager.GetString (msg);
 			if (ret != null)
 				return ret;
 			return msg;

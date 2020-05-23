@@ -766,7 +766,7 @@ namespace System.Windows.Forms
 			
 			int y = ( examplePanel.Height / 2 ) - ( text_height / 2 );
 			
-			e.Graphics.SafeDrawString( example_panel_text, font, brush, new Point( x, y ) );
+			e.Graphics.DrawString( example_panel_text, font, brush, new Point( x, y ) );
 		}
 		
 		void OnSelectedIndexChangedFontListBox( object sender, EventArgs e )
@@ -1291,14 +1291,14 @@ namespace System.Windows.Forms
 					e.Graphics.FillRectangle( ThemeEngine.Current.ResPool.GetSolidBrush( Color.Blue ), e.Bounds ); // bot blue
 					e.Graphics.FillRectangle( ThemeEngine.Current.ResPool.GetSolidBrush( ccbi.Color ), e.Bounds.X + 3, e.Bounds.Y + 3, e.Bounds.X + 16, e.Bounds.Bottom - 3 );
 					e.Graphics.DrawRectangle( ThemeEngine.Current.ResPool.GetPen( Color.Black ), e.Bounds.X + 2, e. Bounds.Y + 2, e.Bounds.X + 17, e.Bounds.Bottom - 3 );
-					e.Graphics.SafeDrawString( ccbi.Name, this.Font, ThemeEngine.Current.ResPool.GetSolidBrush( Color.White ), r );
+					e.Graphics.DrawString( ccbi.Name, this.Font, ThemeEngine.Current.ResPool.GetSolidBrush( Color.White ), r );
 				}
 				else
 				{
 					e.Graphics.FillRectangle( ThemeEngine.Current.ResPool.GetSolidBrush( Color.White ), e.Bounds );
 					e.Graphics.FillRectangle( ThemeEngine.Current.ResPool.GetSolidBrush( ccbi.Color ), e.Bounds.X + 3, e.Bounds.Y + 3, e.Bounds.X + 16, e.Bounds.Bottom - 3 );
 					e.Graphics.DrawRectangle( ThemeEngine.Current.ResPool.GetPen( Color.Black ), e.Bounds.X + 2, e. Bounds.Y + 2, e.Bounds.X + 17, e.Bounds.Bottom - 3 );
-					e.Graphics.SafeDrawString( ccbi.Name, this.Font, ThemeEngine.Current.ResPool.GetSolidBrush( Color.Black ), r );
+					e.Graphics.DrawString( ccbi.Name, this.Font, ThemeEngine.Current.ResPool.GetSolidBrush( Color.Black ), r );
 				}
 			}
 			

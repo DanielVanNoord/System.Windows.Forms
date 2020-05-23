@@ -257,7 +257,7 @@ namespace System.Windows.Forms
 				StringFormat sf = new StringFormat ();
 				sf.Alignment = StringAlignment.Center;
 				
-				e.Graphics.SafeDrawString (e.Text, e.TextFont, ThemeEngine.Current.ResPool.GetSolidBrush (e.TextColor), r, sf);
+				e.Graphics.DrawString (e.Text, e.TextFont, ThemeEngine.Current.ResPool.GetSolidBrush (e.TextColor), r, sf);
 				
 				e.Graphics.Restore (gs);
 			} else if (e.TextDirection == ToolStripTextDirection.Vertical270) {
@@ -272,7 +272,7 @@ namespace System.Windows.Forms
 				StringFormat sf = new StringFormat ();
 				sf.Alignment = StringAlignment.Center;
 
-				e.Graphics.SafeDrawString (e.Text, e.TextFont, ThemeEngine.Current.ResPool.GetSolidBrush (e.TextColor), r, sf);
+				e.Graphics.DrawString (e.Text, e.TextFont, ThemeEngine.Current.ResPool.GetSolidBrush (e.TextColor), r, sf);
 
 				e.Graphics.Restore (gs);
 			} else

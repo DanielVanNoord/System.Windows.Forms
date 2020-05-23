@@ -598,9 +598,9 @@ namespace System.Windows.Forms.PropertyGridInternal {
 
 			if (grid_item.GridItemType == GridItemType.Category) {
 				font = bold_font;
-				brush = SystemBrushes.ControlText;
+				brush = ThemeEngine.Current.ResPool.GetSolidBrush (property_grid.CategoryForeColor);
 
-				pevent.Graphics.SafeDrawString (grid_item.Label, font, brush, rect.X + 1, rect.Y + ENTRY_SPACING);
+				pevent.Graphics.DrawString (grid_item.Label, font, brush, rect.X + 1, rect.Y + ENTRY_SPACING);
 				if (grid_item == this.SelectedGridItem) {
 					SizeF size = pevent.Graphics.MeasureString (grid_item.Label, font);
 					ControlPaint.DrawFocusRectangle (pevent.Graphics, new Rectangle (rect.X + 1, rect.Y+ENTRY_SPACING, (int)size.Width, (int)size.Height));
@@ -621,7 +621,7 @@ namespace System.Windows.Forms.PropertyGridInternal {
 					brush = grid_item.IsReadOnly ? inactive_text_brush : SystemBrushes.ControlText;
 				}
 			}
-			pevent.Graphics.SafeDrawString (grid_item.Label, font, brush,
+			pevent.Graphics.DrawString (grid_item.Label, font, brush,
 						    new Rectangle (rect.X + 1, rect.Y + ENTRY_SPACING, rect.Width - ENTRY_SPACING, rect.Height - ENTRY_SPACING),
 						    string_format);
 		}
@@ -653,7 +653,7 @@ namespace System.Windows.Forms.PropertyGridInternal {
 				else
 					valueText = grid_item.ValueText;
 			}
-			pevent.Graphics.SafeDrawString (valueText, font,
+			pevent.Graphics.DrawString (valueText, font,
 						    brush,
 						    new RectangleF (xLoc + ENTRY_SPACING, rect.Y + ENTRY_SPACING,
 								    ClientRectangle.Width-(xLoc), row_height - ENTRY_SPACING*2), 
@@ -667,11 +667,11 @@ namespace System.Windows.Forms.PropertyGridInternal {
 							       0, yLoc, V_INDENT, row_height);
 			
 				if (grid_item.GridItemType == GridItemType.Category) {
-					pevent.Graphics.FillRectangle (ThemeEngine.Current.ResPool.GetSolidBrush (property_grid.CategoryForeColor), depth*V_INDENT,yLoc,ClientRectangle.Width-(depth*V_INDENT), row_height);
+					pevent.Graphics.FillRectangle (ThemeEngine.Current.ResPool.GetSolidBrush (property_grid.LineColor), depth*V_INDENT,yLoc,ClientRectangle.Width-(depth*V_INDENT), row_height);
 				}
 
 				DrawGridItemLabel (grid_item, pevent,
-						   depth,
+						  depth,
 						  new Rectangle (depth * V_INDENT, yLoc, SplitterLocation - depth * V_INDENT, row_height));
 				DrawGridItemValue (grid_item, pevent,
 						  depth,
