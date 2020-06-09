@@ -11,9 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Drawing.Design", "Sy
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTest", "SimpleTest\SimpleTest.csproj", "{66A6027B-15E8-4834-857B-35A10C83C304}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mono.Types", "Mono.Types\Mono.Types.csproj", "{BF10E833-4A53-43F8-84BE-A159F99A82DC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTest.NetCore", "SimpleTest.NetCore\SimpleTest.NetCore.csproj", "{42C776AC-5B15-4466-8A61-F588439FDC98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTest.NetCore", "SimpleTest.NetCore\SimpleTest.NetCore.csproj", "{42C776AC-5B15-4466-8A61-F588439FDC98}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTest.NetFX", "SimpleTest.NetFX\SimpleTest.NetFX.csproj", "{CA0DE54B-D43B-41B4-AFDC-4E8FF15A5269}"
 EndProject
@@ -39,10 +37,6 @@ Global
 		{66A6027B-15E8-4834-857B-35A10C83C304}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66A6027B-15E8-4834-857B-35A10C83C304}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66A6027B-15E8-4834-857B-35A10C83C304}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BF10E833-4A53-43F8-84BE-A159F99A82DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF10E833-4A53-43F8-84BE-A159F99A82DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF10E833-4A53-43F8-84BE-A159F99A82DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF10E833-4A53-43F8-84BE-A159F99A82DC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{42C776AC-5B15-4466-8A61-F588439FDC98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{42C776AC-5B15-4466-8A61-F588439FDC98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42C776AC-5B15-4466-8A61-F588439FDC98}.Release|Any CPU.ActiveCfg = Release|Any CPU
