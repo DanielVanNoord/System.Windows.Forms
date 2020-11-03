@@ -13,5 +13,7 @@ Mono.WebBrowser/bin/
 Mono.WebBrowser/obj/
 System.Windows.Forms/bin/
 System.Windows.Forms/obj/
+System.Windows.Forms.DataVisualization/bin/
+System.Windows.Forms.DataVisualization/obj/
 System.Drawing.Design/bin/
 System.Drawing.Design/obj/

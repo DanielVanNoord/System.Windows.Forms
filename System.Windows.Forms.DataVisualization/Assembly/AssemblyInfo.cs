@@ -35,22 +35,9 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle ("System.Windows.Forms.DataVisualization.dll")]
-[assembly: AssemblyDescription ("System.Windows.Forms.DataVisualization.dll")]
-[assembly: AssemblyDefaultAlias ("System.Windows.Forms.DataVisualization.dll")]
-
-[assembly: AssemblyCompany (Consts.MonoCompany)]
-[assembly: AssemblyProduct (Consts.MonoProduct)]
-[assembly: AssemblyCopyright (Consts.MonoCopyright)]
-[assembly: AssemblyVersion (Consts.FxVersion)]
-[assembly: SatelliteContractVersion (Consts.FxVersion)]
-[assembly: AssemblyInformationalVersion (Consts.FxFileVersion)]
-[assembly: AssemblyFileVersion (Consts.FxFileVersion)]
 
 [assembly: NeutralResourcesLanguage ("en-US")]
 [assembly: CLSCompliant (true)]
 [assembly: AssemblyDelaySign (true)]
 
 [assembly: SecurityRules (SecurityRuleSet.Level1)]
-
-[assembly: ComVisible (false)]
