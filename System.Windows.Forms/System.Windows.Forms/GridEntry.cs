@@ -49,6 +49,9 @@ namespace System.Windows.Forms.PropertyGridInternal
 		private int top;
 		private Rectangle plus_minus_bounds;
 		private GridItemCollection child_griditems_cache;
+
+		protected static IComparer DisplayNameComparer = new DisplayNameSortComparer();
+
 		#endregion	// Local Variables
 
 		#region  Contructors
@@ -223,22 +226,14 @@ namespace System.Windows.Forms.PropertyGridInternal
 			get {
 				if (PropertyDescriptor == null || PropertyOwner == null)
 					return null;
-
 				return PropertyDescriptor.GetValue (PropertyOwner);
 			}
 		}
 
 		public string ValueText {
-			get { 
-				string text = null;
-				try {
-					text = ConvertToString (this.Value);
-					if (text == null)
-						text = String.Empty;
-				} catch {
-					text = String.Empty;
-				}
-				return text;
+			get {
+				var text = ConvertToString (this.Value);
+				return text ?? String.Empty;
 			}
 		}
 
@@ -466,9 +461,11 @@ namespace System.Windows.Forms.PropertyGridInternal
 			if (this.IsReadOnly)
 				return false;
 
+			object oldValue = Value;
+
 			if (SetValueCore (value, out error)) {
 				InvalidateChildGridItemsCache ();
-				property_grid.OnPropertyValueChangedInternal (this, this.Value);
+				property_grid.OnPropertyValueChangedInternal (this, oldValue);
 				return true;
 			}
 			return false;
@@ -700,7 +697,7 @@ namespace System.Windows.Forms.PropertyGridInternal
 			UITypeEditor editor = GetEditor ();
 			if (editor != null) {
 				try {
-					editor.PaintValue (this.Value, gfx, rect);
+					editor.PaintValue (this.ValueText, gfx, rect);
 				} catch {
 					// Some of our Editors throw NotImplementedException
 				}
@@ -800,6 +797,8 @@ namespace System.Windows.Forms.PropertyGridInternal
 					continue;
 
 				PropertyDescriptorCollection properties = GetProperties (objects[i], property_grid.BrowsableAttributes);
+				if ((property_grid.PropertySort & PropertySort.Alphabetical) != 0)
+					properties = properties.Sort(GridEntry.DisplayNameComparer);
 				ArrayList new_intersection = new ArrayList ();
 
 				foreach (PropertyDescriptor currentProperty in (i == 0 ? (ICollection)properties : (ICollection)intersection)) {
@@ -849,5 +848,13 @@ namespace System.Windows.Forms.PropertyGridInternal
 			return property_grid.SelectedTab.GetProperties ((ITypeDescriptorContext)this, propertyOwner, atts);
 		}
 #endregion  // Population
+
+		public class DisplayNameSortComparer : IComparer
+		{
+			public int Compare(object left, object right)
+			{
+				return string.Compare(((PropertyDescriptor)left).DisplayName, ((PropertyDescriptor)right).DisplayName, true, CultureInfo.CurrentCulture);
+			}
+		}
 	}
 }

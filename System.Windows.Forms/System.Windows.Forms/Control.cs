@@ -2425,8 +2425,6 @@ namespace System.Windows.Forms
 			set { 
 				if (this.context_menu_strip != value) {
 					this.context_menu_strip = value;
-					if (value != null)
-						value.AssociatedControl = this;
 					OnContextMenuStripChanged (EventArgs.Empty);
 				}
 			}
@@ -3217,7 +3215,8 @@ namespace System.Windows.Forms
 				while (p != null && !p.GetTopLevel()) {
 					p = p.parent;
 				}
-				return p;
+				// If the control is not parented on a Form, this property will return null
+				return p as Form as Control;
 			}
 		}
 
