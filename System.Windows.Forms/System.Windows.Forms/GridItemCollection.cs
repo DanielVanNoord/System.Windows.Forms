@@ -27,14 +27,16 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Forms.PropertyGridInternal;
 
 namespace System.Windows.Forms
 {
-	public class GridItemCollection : IEnumerable, ICollection
+	public class GridItemCollection : ICollection
 	{
 		#region	Local Variables
-		private System.Collections.SortedList list;
+		private IList list;
 		#endregion	// Local Variables
 
 		#region Public Static Fields
@@ -44,30 +46,33 @@ namespace System.Windows.Forms
 		#region	Constructors
 		internal GridItemCollection()
 		{
-			list = new SortedList();
+			list = new List<GridItem>();
 		}
 		#endregion	// Constructors
 
 		#region Internal Properties and Methods
 		internal void Add (GridItem grid_item)
 		{
-			string key = grid_item.Label;
-			while (list.ContainsKey (key))
-				key += "_";
-			list.Add (key, grid_item);
+			list.Add(grid_item);
 		}
 
-		internal void AddRange (GridItemCollection items)
+		internal void AddRange(GridItemCollection items)
 		{
 			foreach (GridItem item in items)
 				Add (item);
 		}
 
-		internal int IndexOf (GridItem grid_item)
+		internal int IndexOf(GridItem grid_item)
 		{
-			return list.IndexOfValue (grid_item);
+			return list.IndexOf(grid_item);
 		}
-		#endregion	// Internal Properties and Methods
+
+		internal void Sort()
+		{
+			((List<GridItem>)list).Sort(new GridItemSortComparer());
+		}
+
+		#endregion // Internal Properties and Methods
 
 		#region	Public Instance Properties
 		public int Count {
@@ -81,13 +86,23 @@ namespace System.Windows.Forms
 				if (index>=list.Count) {
 					throw new ArgumentOutOfRangeException("index");
 				}
-				return (GridItem)list.GetByIndex(index);
+				return (GridItem)list[index];
 			}
 		}
 
-		public GridItem this [string label] {
-			get {
-				return (GridItem)list[label];
+		public GridItem this[string label]
+		{
+			get
+			{
+				foreach (GridItem g in list)
+				{
+					if (g.Label == label)
+					{
+						return g;
+					}
+				}
+
+				return null;
 			}
 		}
 		#endregion	// Public Instance Properties
@@ -153,6 +168,14 @@ namespace System.Windows.Forms
 		internal void Clear ()
 		{
 			list.Clear ();
+		}
+
+		internal class GridItemSortComparer : IComparer<GridItem>
+		{
+			public int Compare(GridItem left, GridItem right)
+			{
+				return string.Compare(left.Label, right.Label, true, CultureInfo.CurrentCulture);
+			}
 		}
 	}
 }
