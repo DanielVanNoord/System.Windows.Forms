@@ -59,7 +59,7 @@ namespace System.Windows.Forms {
 		internal IntPtr		window;
 		internal IntPtr		root;
 		internal IntPtr		subwindow;
-		internal IntPtr		time;
+		internal UIntPtr		time;
 		internal int		x;
 		internal int		y;
 		internal int		x_root;
@@ -78,7 +78,7 @@ namespace System.Windows.Forms {
 		internal IntPtr		window;
 		internal IntPtr		root;
 		internal IntPtr		subwindow;
-		internal IntPtr		time;
+		internal UIntPtr		time;
 		internal int		x;
 		internal int		y;
 		internal int		x_root;
@@ -97,7 +97,7 @@ namespace System.Windows.Forms {
 		internal IntPtr		window;
 		internal IntPtr		root;
 		internal IntPtr		subwindow;
-		internal IntPtr		time;
+		internal UIntPtr		time;
 		internal int		x;
 		internal int		y;
 		internal int		x_root;
@@ -116,7 +116,7 @@ namespace System.Windows.Forms {
 		internal IntPtr		window;
 		internal IntPtr		root;
 		internal IntPtr		subwindow;
-		internal IntPtr		time;
+		internal UIntPtr		time;
 		internal int		x;
 		internal int		y;
 		internal int		x_root;
@@ -391,7 +391,7 @@ namespace System.Windows.Forms {
 		internal IntPtr		display;
 		internal IntPtr		window;
 		internal IntPtr		atom;
-		internal IntPtr		time;
+		internal UIntPtr		time;
 		internal int		state;
 	}
 
@@ -403,7 +403,7 @@ namespace System.Windows.Forms {
 		internal IntPtr		display;
 		internal IntPtr		window;
 		internal IntPtr		selection;
-		internal IntPtr		time;
+		internal UIntPtr		time;
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
@@ -417,7 +417,7 @@ namespace System.Windows.Forms {
 		internal IntPtr		selection;
 		internal IntPtr		target;
 		internal IntPtr		property;
-		internal IntPtr		time;
+		internal UIntPtr		time;
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
@@ -430,7 +430,7 @@ namespace System.Windows.Forms {
 		internal IntPtr		selection;
 		internal IntPtr		target;
 		internal IntPtr		property;
-		internal IntPtr		time;
+		internal UIntPtr		time;
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
@@ -1483,7 +1483,7 @@ namespace System.Windows.Forms {
 		internal Msg	Message;			// 
 		internal IntPtr	wParam;				// 
 		internal IntPtr	lParam;				// 
-		internal long	Time;				// Last time we received a mouse click
+		internal uint	Time;				// Last time we received a mouse click
 		internal bool	Pending;			// True if we haven't sent the last mouse click
 	}
 

@@ -53,6 +53,15 @@ namespace System.Windows.Forms.CarbonInternal {
 		internal const uint DoubleClickInterval = 7500000;
 		internal static ClickStruct ClickPending;
 		
+		internal struct ClickStruct {
+			internal IntPtr	Hwnd;				// 
+			internal Msg	Message;			// 
+			internal IntPtr	wParam;				// 
+			internal IntPtr	lParam;				// 
+			internal long	Time;				// Last time we received a mouse click
+			internal bool	Pending;			// True if we haven't sent the last mouse click
+		}
+		
 		internal MouseHandler (XplatUICarbon driver) : base (driver) {}
 
 		public bool ProcessEvent (IntPtr callref, IntPtr eventref, IntPtr handle, uint kind, ref MSG msg) {
