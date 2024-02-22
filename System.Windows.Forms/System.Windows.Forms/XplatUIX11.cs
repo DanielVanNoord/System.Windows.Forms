@@ -4169,7 +4169,7 @@ namespace System.Windows.Forms {
 						msg.hwnd = Grab.Hwnd;
 					}
 
-					if (ClickPending.Pending && ((((long)xevent.ButtonEvent.time - ClickPending.Time) < DoubleClickInterval) && (msg.wParam == ClickPending.wParam) && (msg.lParam == ClickPending.lParam) && (msg.message == ClickPending.Message))) {
+					if (ClickPending.Pending && (( unchecked((uint)xevent.ButtonEvent.time - ClickPending.Time) < DoubleClickInterval) && (msg.wParam == ClickPending.wParam) && (msg.lParam == ClickPending.lParam) && (msg.message == ClickPending.Message))) {
 						// Looks like a genuine double click, clicked twice on the same spot with the same keys
 						switch(xevent.ButtonEvent.button) {
 							case 1: {
@@ -4194,7 +4194,7 @@ namespace System.Windows.Forms {
 						ClickPending.Message = msg.message;
 						ClickPending.wParam = msg.wParam;
 						ClickPending.lParam = msg.lParam;
-						ClickPending.Time = (long)xevent.ButtonEvent.time;
+						ClickPending.Time = (uint)xevent.ButtonEvent.time;
 					}
 					
 					if (msg.message == Msg.WM_LBUTTONDOWN || msg.message == Msg.WM_MBUTTONDOWN || msg.message == Msg.WM_RBUTTONDOWN) {

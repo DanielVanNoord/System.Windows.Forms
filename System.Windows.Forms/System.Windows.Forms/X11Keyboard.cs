@@ -309,7 +309,7 @@ namespace System.Windows.Forms {
 			if ((xevent.KeyEvent.keycode >> 8) == 0x10)
 				xevent.KeyEvent.keycode = xevent.KeyEvent.keycode & 0xFF;
 
-			int event_time = (int)xevent.KeyEvent.time;
+			uint event_time = (uint)xevent.KeyEvent.time;
 
 			if (status == XLookupStatus.XLookupChars) {
 				// do not ignore those inputs. They are mostly from XIM.
@@ -553,7 +553,7 @@ namespace System.Windows.Forms {
 			return msg;
 		}
 
-		private MSG SendKeyboardInput (VirtualKeys vkey, int scan, int keycode, KeybdEventFlags dw_flags, int time)
+		private MSG SendKeyboardInput (VirtualKeys vkey, int scan, int keycode, KeybdEventFlags dw_flags, uint time)
 		{
 			Msg message;
 
@@ -620,7 +620,7 @@ namespace System.Windows.Forms {
 			return (IntPtr)lparam;
 		}
 
-		private void GenerateMessage (VirtualKeys vkey, int scan, int key_code, XEventName type, int event_time)
+		private void GenerateMessage (VirtualKeys vkey, int scan, int key_code, XEventName type, uint event_time)
 		{
 			bool state = (vkey == VirtualKeys.VK_NUMLOCK ? num_state : cap_state);
 			KeybdEventFlags up, down;
