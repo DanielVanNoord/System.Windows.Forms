@@ -4018,7 +4018,7 @@ namespace System.Windows.Forms {
 			// hwnds, since much of the event handling code makes requests using the hwnd's
 			// client_window, and that'll result in BadWindow errors if there's some lag
 			// between the XDestroyWindow call and the DestroyNotify event.
-			if (hwnd == null || hwnd.zombie && xevent.AnyEvent.type != XEventName.ClientMessage) {
+			if (hwnd == null || hwnd.zombie && xevent.AnyEvent.type != XEventName.ClientMessage && xevent.type != XEventName.DestroyNotify) {
 				DriverDebug("GetMessage(): Got message {0} for non-existent or already destroyed window {1:X}", xevent.type, xevent.AnyEvent.window.ToInt32());
 				goto ProcessNextMessage;
 			}
