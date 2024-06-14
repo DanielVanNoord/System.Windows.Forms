@@ -1236,8 +1236,8 @@ namespace System.Windows.Forms {
 		void WakeupMain () {
 			try {
 				wake.Write (new byte [] { 0xFF }, 0, 1);
-			} catch (SocketException ex) {
-				if (ex.SocketErrorCode != SocketError.WouldBlock) {
+			} catch (UnixIOException ex) {
+				if (ex.ErrorCode != Errno.EWOULDBLOCK && ex.ErrorCode != Errno.EAGAIN) {
 					throw;
 				}
 			}
