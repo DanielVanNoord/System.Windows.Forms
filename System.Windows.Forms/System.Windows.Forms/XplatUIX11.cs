@@ -4366,7 +4366,7 @@ namespace System.Windows.Forms {
 					hwnd = Hwnd.ObjectFromHandle(xevent.DestroyWindowEvent.window);
 
 					// We may get multiple for the same window, act only one the first (when Hwnd still knows about it)
-					if ((hwnd != null) && (hwnd.client_window == xevent.DestroyWindowEvent.window)) {
+					if ((hwnd != null) && (hwnd.client_window == xevent.DestroyWindowEvent.window) && hwnd.zombie) {
 						CleanupCachedWindows (hwnd);
 
 						DriverDebug("Received X11 Destroy Notification for {0}", XplatUI.Window(hwnd.client_window));

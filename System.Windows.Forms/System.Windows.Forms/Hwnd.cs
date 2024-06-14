@@ -438,10 +438,15 @@ namespace System.Windows.Forms {
 				handle = value;
 
 				zombie = false;
-
+				
 				if (client_window != IntPtr.Zero) {
 					lock (windows) {
-						if (windows[client_window] == null) {
+						Hwnd window = (Hwnd)windows[client_window];
+						if (window == null) {
+							windows[client_window] = this;
+						}
+						else if (window.zombie) {
+							window.Dispose();
 							windows[client_window] = this;
 						}
 					}
