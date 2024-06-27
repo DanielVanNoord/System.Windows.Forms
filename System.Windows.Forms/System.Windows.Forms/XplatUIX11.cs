@@ -3583,7 +3583,7 @@ namespace System.Windows.Forms {
 			lock (XlibLock) {
 				if (hwnd.whole_window != IntPtr.Zero) {
 					DriverDebug ("XDestroyWindow (whole_window = {0:X})", hwnd.whole_window.ToInt32());
-					Keyboard.DestroyICForWindow (hwnd.whole_window);
+					Keyboard.DestroyICForWindow (hwnd.client_window);
 					XDestroyWindow(DisplayHandle, hwnd.whole_window);
 				}
 				else if (hwnd.client_window != IntPtr.Zero) {
