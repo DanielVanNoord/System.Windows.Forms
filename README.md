@@ -5,6 +5,8 @@ Rather then porting Mono's implementation of System.Drawing to .Net 6.0 I ported
 
 Even though this is highly experimental and unsupported it does work (at least for me).
 
+Builds are available via Nuget from the package Core.System.Windows.Forms or at https://www.nuget.org/packages/Core.System.Windows.Forms/. 
+
 As of Alpha 4 this targets .Net 6.0 instead of .Net Core 3.1.
 
 A Demo on my Raspberry Pi 4, built and running on the Pi using .Net Core 3.1.
