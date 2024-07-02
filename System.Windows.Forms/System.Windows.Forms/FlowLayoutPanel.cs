@@ -76,6 +76,18 @@ namespace System.Windows.Forms
 			}
 		}
 		#endregion
+		
+		#region Internal and Protected Methods
+
+		protected override void OnControlRemoved(ControlEventArgs e)
+		{
+			if (settings != null) 
+				settings.RemoveFlowBreak(e.Control);
+
+			base.OnControlRemoved(e);
+		}
+
+		#endregion
 
 		#region Public Methods
 		[DefaultValue (false)]
