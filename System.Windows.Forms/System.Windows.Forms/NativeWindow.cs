@@ -222,8 +222,11 @@ namespace System.Windows.Forms
 		#region Protected Instance Methods
 		~NativeWindow()
 		{
-			if(window_handle != IntPtr.Zero)
+			if (window_handle != IntPtr.Zero)
+			{
 				RemoveFromTable(this);
+				XplatUI.DestroyWindow(window_handle);
+			}
 		}
 
 		protected virtual void OnHandleChange()
