@@ -1669,6 +1669,22 @@ namespace System.Windows.Forms {
 					else if (XFilterEvent (ref xevent, IntPtr.Zero))
 						continue;
 				}
+				
+				if (Hwnd.IsBeingDestroyed(xevent.AnyEvent.window))
+				{
+					// XDestroyWindow was called but we didn't get DestroyNotify yet.
+
+					DriverDebug ("UpdateMessageQueue destroyed, got Event: {0}", xevent.ToString ());
+
+					if (xevent.type == XEventName.DestroyNotify &&
+					    xevent.DestroyWindowEvent.xevent == xevent.DestroyWindowEvent.window)
+					{
+						Hwnd.FinishAsyncDestroy(xevent.DestroyWindowEvent.window);
+					}
+
+					// Ignore this event in case the hwnd was reassigned by the X11 server.
+					continue;
+				}
 
 				hwnd = Hwnd.GetObjectFromWindow(xevent.AnyEvent.window);
 				if (hwnd == null)
@@ -2516,7 +2532,7 @@ namespace System.Windows.Forms {
 		internal override int ClipboardGetID(IntPtr handle, string format)
 		{
 			return  XplatUIX11.XInternAtom (DisplayHandle, format, false).ToInt32 ();
-			}
+		}
 
 		[Obsolete("ClipboardOpen is obsolete for X11, use System.Windows.Forms.Clipboard instead", true)]
 		internal override IntPtr ClipboardOpen(bool primary_selection)
@@ -2528,7 +2544,7 @@ namespace System.Windows.Forms {
 		internal override object ClipboardRetrieve(IntPtr handle, int type, XplatUI.ClipboardToObject converter)
 		{
 			throw new NotImplementedException ("ClipboardRetrieveis obsolete for X11, use System.Windows.Forms.Clipboard instead");
-			}
+		}
 
 		[Obsolete("ClipboardStore is obsolete for X11, use System.Windows.Forms.Clipboard instead", true)]
 		internal override void ClipboardStore (IntPtr handle, object obj, int type, XplatUI.ObjectToClipboard converter, bool copy)
@@ -2542,15 +2558,15 @@ namespace System.Windows.Forms {
 
 		IDataObject ClipboardGetContentImp (bool primary_selection) {
 			return Clipboards[primary_selection ? 1 : 0].GetContent ();
-							}
+		}
 
 		void ClipboardSetContentImp (bool primary_selection, object data, bool copy) {
 			Clipboards[primary_selection ? 1 : 0].SetContent (data, copy);
-						}
+		}
 
 		void ClipboardClearImp (bool primary_selection) {
 			Clipboards[primary_selection ? 1 : 0].Clear ();
-					}
+		}
 
 		internal override void CreateCaret (IntPtr handle, int width, int height)
 		{
@@ -3300,7 +3316,7 @@ namespace System.Windows.Forms {
 
 				h.expose_pending = h.nc_expose_pending = false;
 				h.Queue.Paint.Remove (h);
-		}
+			}
 		}
 
 		internal override IntPtr DispatchMessage(ref MSG msg)
@@ -3714,24 +3730,6 @@ namespace System.Windows.Forms {
 				msg.wParam = xevent.ClientMessageEvent.ptr3;
 				msg.lParam = xevent.ClientMessageEvent.ptr2;
 				return false;
-			}
-
-			if (Hwnd.IsBeingDestroyed(xevent.AnyEvent.window))
-			{
-				// XDestroyWindow was called but we didn't get DestroyNotify yet.
-
-#if DriverDebugDestroy			
-				Console.WriteLine ( "GetMessage destroyed, got Event: " + xevent.ToString () + " for 0x{0:x}", xevent.AnyEvent.window.ToInt32());
-#endif
-
-				if (xevent.type == XEventName.DestroyNotify &&
-					xevent.DestroyWindowEvent.xevent == xevent.DestroyWindowEvent.window)
-				{
-					Hwnd.FinishAsyncDestroy(xevent.DestroyWindowEvent.window);
-				}
-
-				// Ignore this event in case the hwnd was reassigned by the X11 server.
-				goto ProcessNextMessage;
 			}
 
 			hwnd = Hwnd.GetObjectFromWindow(xevent.AnyEvent.window);
@@ -4418,7 +4416,7 @@ namespace System.Windows.Forms {
 						msg.message = (Msg) xevent.ClientMessageEvent.ptr2.ToInt32 ();
 						msg.wParam = xevent.ClientMessageEvent.ptr3;
 						msg.lParam = xevent.ClientMessageEvent.ptr4;
-							return true;
+						return true;
 					}
 
 					if  (xevent.ClientMessageEvent.message_type == _XEMBED) {
