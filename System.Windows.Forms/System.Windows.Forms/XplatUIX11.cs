@@ -2791,7 +2791,7 @@ namespace System.Windows.Forms {
 			}
 
 			// Win32 only allows creation cursors of a certain size
-			if ((bitmap.Width != width) || (bitmap.Width != height)) {
+			if (width != 0 && height != 0 && (bitmap.Width != width || bitmap.Width != height)) {
 				cursor_bitmap = new Bitmap(bitmap, new Size(width, height));
 				cursor_mask = new Bitmap(mask, new Size(width, height));
 			} else {
