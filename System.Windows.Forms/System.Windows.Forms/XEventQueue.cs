@@ -40,6 +40,8 @@ namespace System.Windows.Forms {
 		internal ArrayList	timer_list;
 		private Thread		thread;
 		private bool            dispatch_idle;
+		private bool		has_quit;
+		private int			exit_code;
 
 		private static readonly int InitialXEventSize = 100;
 		private static readonly int InitialLXEventSize = 10;
@@ -82,6 +84,23 @@ namespace System.Windows.Forms {
 			}
 
 			xqueue.Enqueue (xevent);
+		}
+
+		public void PostQuitMessage (int exit_code)
+		{
+			has_quit = true;
+			this.exit_code = exit_code;
+		}
+
+		public bool GetQuitMessage (bool remove, out int exit_code)
+		{
+			exit_code = 0;
+			if (!has_quit)
+				return false;
+			if (remove)
+				has_quit = false;
+			exit_code = this.exit_code;
+			return true;
 		}
 
 		public void EnqueueLocked (XEvent xevent)

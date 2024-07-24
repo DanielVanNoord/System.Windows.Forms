@@ -28,6 +28,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
@@ -40,6 +41,7 @@ namespace System.Windows.Forms {
 		#region Local Variables
 		private static Hashtable	windows	= new Hashtable(100, 0.5f);
 		//private const int	menu_height = 14;			// FIXME - Read this value from somewhere
+		private static Dictionary<IntPtr, int> destroyed_windows = new Dictionary<IntPtr, int> (); 		// destroyed Hwnds for which we haven't gotten DestroyNotify yet
 		
 		private IntPtr		handle;
 		internal IntPtr		client_window;
@@ -392,6 +394,35 @@ namespace System.Windows.Forms {
 				return bmp_g;
 			}
 		}
+
+		private static void AddDestroyedWindow(IntPtr window)
+		{
+			int refcount;
+			if (window != IntPtr.Zero)
+			{
+				destroyed_windows.TryGetValue(window, out refcount);
+				destroyed_windows[window] = refcount + 1;
+			}
+		}
+
+		public static bool IsBeingDestroyed(IntPtr window)
+		{
+			lock (destroyed_windows) {
+				return destroyed_windows.ContainsKey(window);
+			}
+		}
+
+		public static void FinishAsyncDestroy(IntPtr window)
+		{
+			lock (destroyed_windows) {
+				if (destroyed_windows.TryGetValue(window, out int refcount)) {
+					if (refcount <= 1)
+						destroyed_windows.Remove(window);
+					else
+						destroyed_windows[window] = refcount - 1;
+				}
+			}
+		}
 		#endregion	// Static Methods
 
 		#region Instance Properties
@@ -438,15 +469,10 @@ namespace System.Windows.Forms {
 				handle = value;
 
 				zombie = false;
-				
+
 				if (client_window != IntPtr.Zero) {
 					lock (windows) {
-						Hwnd window = (Hwnd)windows[client_window];
-						if (window == null) {
-							windows[client_window] = this;
-						}
-						else if (window.zombie) {
-							window.Dispose();
+						if (windows[client_window] == null) {
 							windows[client_window] = this;
 						}
 					}
@@ -845,6 +871,23 @@ namespace System.Windows.Forms {
 			Hwnd.previous_main_startup_location = next;
 
 			return next;
+		}
+
+		public void BeginAsyncDestroy()
+		{
+			// In X11, an XDestroyWindow call may not take effect immediately. In case
+			// the window id is reassigned, we have to ignore any events up to and
+			// including the DestroyNotify, but we also have to remove them from the
+			// hwnd table so we can track the current Hwnd in case of reuse.
+			//
+			// Therefore, window destruction is a multi-step process: StartAsyncDestroy
+			// when we call XDestroyWindow and FinishAsyncDestroy(hwnd) when we get a
+			// DestroyNotify.
+			lock (destroyed_windows) {
+				AddDestroyedWindow(client_window);
+				AddDestroyedWindow(whole_window);
+			}
+			Dispose();
 		}
 
 		#endregion	// Methods

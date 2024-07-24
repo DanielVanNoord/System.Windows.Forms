@@ -52,6 +52,11 @@ namespace System.Windows.Forms
 			this.owner = owner;
 		}
 
+		internal void RemoveFlowBreak(Object child)
+		{
+			flow_breaks.Remove(child);
+		}
+
 		#region Public Properties
 		[DefaultValue (FlowDirection.LeftToRight)]
 		public FlowDirection FlowDirection {

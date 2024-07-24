@@ -1459,7 +1459,7 @@ namespace System.Windows.Forms {
 				
 				if (PeekMessage(queue, ref msg, IntPtr.Zero, 0, 0, (uint)PeekMessageFlags.PM_REMOVE)) {
 					if ((Msg)msg.message == Msg.WM_QUIT) {
-						PostQuitMessage (0);
+						PostQuitMessage ((int)(long)(msg.wParam));
 						done = true;
 					}
 					else {
@@ -1668,6 +1668,22 @@ namespace System.Windows.Forms {
 					}
 					else if (XFilterEvent (ref xevent, IntPtr.Zero))
 						continue;
+				}
+				
+				if (Hwnd.IsBeingDestroyed(xevent.AnyEvent.window))
+				{
+					// XDestroyWindow was called but we didn't get DestroyNotify yet.
+
+					DriverDebug ("UpdateMessageQueue destroyed, got Event: {0}", xevent.ToString ());
+
+					if (xevent.type == XEventName.DestroyNotify &&
+					    xevent.DestroyWindowEvent.xevent == xevent.DestroyWindowEvent.window)
+					{
+						Hwnd.FinishAsyncDestroy(xevent.DestroyWindowEvent.window);
+					}
+
+					// Ignore this event in case the hwnd was reassigned by the X11 server.
+					continue;
 				}
 
 				hwnd = Hwnd.GetObjectFromWindow(xevent.AnyEvent.window);
@@ -2516,7 +2532,7 @@ namespace System.Windows.Forms {
 		internal override int ClipboardGetID(IntPtr handle, string format)
 		{
 			return  XplatUIX11.XInternAtom (DisplayHandle, format, false).ToInt32 ();
-			}
+		}
 
 		[Obsolete("ClipboardOpen is obsolete for X11, use System.Windows.Forms.Clipboard instead", true)]
 		internal override IntPtr ClipboardOpen(bool primary_selection)
@@ -2528,7 +2544,7 @@ namespace System.Windows.Forms {
 		internal override object ClipboardRetrieve(IntPtr handle, int type, XplatUI.ClipboardToObject converter)
 		{
 			throw new NotImplementedException ("ClipboardRetrieveis obsolete for X11, use System.Windows.Forms.Clipboard instead");
-			}
+		}
 
 		[Obsolete("ClipboardStore is obsolete for X11, use System.Windows.Forms.Clipboard instead", true)]
 		internal override void ClipboardStore (IntPtr handle, object obj, int type, XplatUI.ObjectToClipboard converter, bool copy)
@@ -2542,15 +2558,15 @@ namespace System.Windows.Forms {
 
 		IDataObject ClipboardGetContentImp (bool primary_selection) {
 			return Clipboards[primary_selection ? 1 : 0].GetContent ();
-							}
+		}
 
 		void ClipboardSetContentImp (bool primary_selection, object data, bool copy) {
 			Clipboards[primary_selection ? 1 : 0].SetContent (data, copy);
-						}
+		}
 
 		void ClipboardClearImp (bool primary_selection) {
 			Clipboards[primary_selection ? 1 : 0].Clear ();
-					}
+		}
 
 		internal override void CreateCaret (IntPtr handle, int width, int height)
 		{
@@ -3278,7 +3294,6 @@ namespace System.Windows.Forms {
 
 			foreach (Hwnd h in windows) {
 				SendMessage (h.Handle, Msg.WM_DESTROY, IntPtr.Zero, IntPtr.Zero);
-				h.zombie = true;				
 			}
 
 			lock (XlibLock) {
@@ -3293,6 +3308,14 @@ namespace System.Windows.Forms {
 					XDestroyWindow(DisplayHandle, hwnd.client_window);
 				}
 
+			}
+
+			foreach (Hwnd h in windows)
+			{
+				h.BeginAsyncDestroy();
+
+				h.expose_pending = h.nc_expose_pending = false;
+				h.Queue.Paint.Remove (h);
 			}
 		}
 
@@ -3686,6 +3709,12 @@ namespace System.Windows.Forms {
 
 				if (((XEventQueue)queue_id).Count > 0) {
 					xevent = (XEvent) ((XEventQueue)queue_id).Dequeue ();
+				} else if (((XEventQueue)queue_id).GetQuitMessage (true, out int exit_code)) {
+					msg.message = Msg.WM_QUIT;
+					msg.hwnd = IntPtr.Zero;
+					msg.wParam = (IntPtr)exit_code;
+					msg.lParam = IntPtr.Zero;
+					return false;
 				} else if (((XEventQueue)queue_id).Paint.Count > 0) {
 					xevent = ((XEventQueue)queue_id).Paint.Dequeue();
 				} else {
@@ -3693,6 +3722,20 @@ namespace System.Windows.Forms {
 					msg.message = Msg.WM_ENTERIDLE;
 					return true;
 				}
+			}
+
+			if (xevent.type == XEventName.ClientMessage &&
+				xevent.ClientMessageEvent.message_type == (IntPtr)PostAtom &&
+				(Msg)xevent.ClientMessageEvent.ptr2.ToInt32() == Msg.WM_QUIT)
+			{
+				DebugHelper.Indent ();
+				DebugHelper.WriteLine (String.Format ("Got WM_QUIT"));
+				DebugHelper.Unindent ();
+				msg.hwnd = IntPtr.Zero;
+				msg.message = Msg.WM_QUIT;
+				msg.wParam = xevent.ClientMessageEvent.ptr3;
+				msg.lParam = xevent.ClientMessageEvent.ptr2;
+				return false;
 			}
 
 			hwnd = Hwnd.GetObjectFromWindow(xevent.AnyEvent.window);
@@ -3704,33 +3747,9 @@ namespace System.Windows.Forms {
 				else	
 					Console.WriteLine ( "GetMessage, got Event: " + xevent.ToString () + " for 0x{0:x}", hwnd.Handle.ToInt32());
 #endif
-			// Handle messages for windows that are already or are about to be destroyed.
-
-			// we need a special block for this because unless we remove the hwnd from the paint
-			// queue it will always stay there (since we don't handle the expose), and we'll
-			// effectively loop infinitely trying to repaint a non-existant window.
-			if (hwnd != null && hwnd.zombie && xevent.type == XEventName.Expose) {
-				hwnd.expose_pending = hwnd.nc_expose_pending = false;
-				hwnd.Queue.Paint.Remove (hwnd);
-				goto ProcessNextMessage;
-			}
-
-			// We need to make sure we only allow DestroyNotify events through for zombie
-			// hwnds, since much of the event handling code makes requests using the hwnd's
-			// client_window, and that'll result in BadWindow errors if there's some lag
-			// between the XDestroyWindow call and the DestroyNotify event.
-			if (hwnd == null || hwnd.zombie && xevent.AnyEvent.type != XEventName.ClientMessage && xevent.type != XEventName.DestroyNotify) {
+			if (hwnd == null) {
 				DriverDebug("GetMessage(): Got message {0} for non-existent or already destroyed window {1:X}", xevent.type, xevent.AnyEvent.window.ToInt32());
 				goto ProcessNextMessage;
-			}
-
-
-			// If we get here, that means the window is no more but there are Client Messages
-			// to be processed, probably a Posted message (for instance, an WM_ACTIVATE message) 
-			// We don't want anything else to run but the ClientMessage block, so reset all hwnd
-			// properties that might cause other processing to occur.
-			if (hwnd.zombie) {
-				hwnd.resizing_or_moving = false;
 			}
 
 			if (hwnd.client_window == xevent.AnyEvent.window) {
@@ -4361,8 +4380,9 @@ namespace System.Windows.Forms {
 					// This is a bit tricky, we don't receive our own DestroyNotify, we only get those for our children
 					hwnd = Hwnd.ObjectFromHandle(xevent.DestroyWindowEvent.window);
 
-					// We may get multiple for the same window, act only one the first (when Hwnd still knows about it)
-					if ((hwnd != null) && (hwnd.client_window == xevent.DestroyWindowEvent.window) && hwnd.zombie) {
+					// We may get multiple for the same window, act only on client_window's notification from StructureNotifyMask
+					if ((hwnd != null) && (hwnd.client_window == xevent.DestroyWindowEvent.window) &&
+						(hwnd.client_window == xevent.DestroyWindowEvent.xevent)) {
 						CleanupCachedWindows (hwnd);
 
 						DriverDebug("Received X11 Destroy Notification for {0}", XplatUI.Window(hwnd.client_window));
@@ -4402,10 +4422,7 @@ namespace System.Windows.Forms {
 						msg.message = (Msg) xevent.ClientMessageEvent.ptr2.ToInt32 ();
 						msg.wParam = xevent.ClientMessageEvent.ptr3;
 						msg.lParam = xevent.ClientMessageEvent.ptr4;
-						if (msg.message == (Msg)Msg.WM_QUIT)
-							return false;
-						else
-							return true;
+						return true;
 					}
 
 					if  (xevent.ClientMessageEvent.message_type == _XEMBED) {
@@ -4852,7 +4869,7 @@ namespace System.Windows.Forms {
 			}
 
 			pending = false;
-			if (queue.Count > 0) {
+			if (queue.Count > 0 || queue.GetQuitMessage(false, out int _exitcode)) {
 				pending = true;
 			} else {
 				// Only call UpdateMessageQueue if real events are pending 
@@ -4904,13 +4921,8 @@ namespace System.Windows.Forms {
 
 		internal override void PostQuitMessage(int exitCode)
 		{
-			ApplicationContext ctx = Application.MWFThread.Current.Context;
-			Form f = ctx != null ? ctx.MainForm : null;
-			if (f != null)
-				PostMessage (Application.MWFThread.Current.Context.MainForm.window.Handle, Msg.WM_QUIT, IntPtr.Zero, IntPtr.Zero);
-			else
-				PostMessage (FosterParent, Msg.WM_QUIT, IntPtr.Zero, IntPtr.Zero);
-			XFlush(DisplayHandle);
+			var queue = ThreadQueue(Thread.CurrentThread);
+			queue.PostQuitMessage(exitCode);
 		}
 
 		internal override void RequestAdditionalWM_NCMessages(IntPtr hwnd, bool hover, bool leave)

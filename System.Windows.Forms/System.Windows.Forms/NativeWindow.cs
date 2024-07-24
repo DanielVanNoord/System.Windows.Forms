@@ -36,6 +36,7 @@ using System.Threading;
 using System.Collections;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 
 namespace System.Windows.Forms
 {
@@ -53,7 +54,7 @@ namespace System.Windows.Forms
 			window_handle=IntPtr.Zero;
 		}
 		#endregion	// Public Constructors
-
+		
 		#region Public Instance Properties
 		public IntPtr Handle {
 			get {
@@ -94,21 +95,32 @@ namespace System.Windows.Forms
 
 			lock (window_collection) {
 				object current = window_collection[handle];
+				var windowWeakRef = new WeakReference(window, false);
+				
 				if (current == null) {
-					window_collection.Add (handle, window);
+					window_collection.Add (handle, windowWeakRef);
 				} else {
-					NativeWindow currentWindow = current as NativeWindow;
-					if (currentWindow != null) {
-						if (currentWindow != window) {
+					var currentWindowRef = current as WeakReference;
+					if (currentWindowRef != null) {
+						NativeWindow currentWindow = currentWindowRef.Target as NativeWindow;
+						if (currentWindow == null) {
+							window_collection.Add (handle, windowWeakRef);
+						}
+						else if (currentWindow != window) {
 							ArrayList windows = new ArrayList ();
-							windows.Add (currentWindow);
-							windows.Add (window);
+							windows.Add (currentWindowRef);
+							windows.Add (windowWeakRef);
 							window_collection[handle] = windows;
 						}
 					} else { // list of windows
 						ArrayList windows = (ArrayList) window_collection[handle];
-						if (!windows.Contains (window))
-							windows.Add (window);
+						
+						var windowInArray = windows.Cast<WeakReference>().Any(
+							windowRef => windowRef.Target == window
+							);
+
+						if (!windowInArray)
+							windows.Add (new WeakReference(window, false));
 					}
 				}
 			}
@@ -123,16 +135,29 @@ namespace System.Windows.Forms
 			lock (window_collection) {
 				object current = window_collection[handle];
 				if (current != null) {
-					NativeWindow currentWindow = current as NativeWindow;
-					if (currentWindow != null) {
+					WeakReference currentWindowRef = current as WeakReference;
+					if (currentWindowRef != null) {
 						window_collection.Remove (handle);
 					} else { // list of windows
-						ArrayList windows = (ArrayList) window_collection[handle];
-						windows.Remove (window);
+						ArrayList windowRefs = (ArrayList) window_collection[handle];
+						ArrayList windows = new ArrayList();
+
+						foreach (var obj in windowRefs)
+						{
+							WeakReference windowRef = (WeakReference)obj;
+							var target = windowRef.Target;
+							if(target == null || target == window)
+								continue;
+							
+							windows.Add(windowRef);
+						}
+
 						if (windows.Count == 0)
 							window_collection.Remove (handle);
 						else if (windows.Count == 1)
 							window_collection[handle] = windows[0];
+						else
+							window_collection[handle] = windows;
 					}
 				}
 			}
@@ -147,12 +172,14 @@ namespace System.Windows.Forms
 			lock (window_collection) {
 				object current = window_collection[handle];
 				if (current != null) {
-					window = current as NativeWindow;
-					if (window == null) {
+					WeakReference currentWindowRef = current as WeakReference;
+					if (currentWindowRef == null) {
 						ArrayList windows = (ArrayList) current;
 						if (windows.Count > 0)
-							window = (NativeWindow) windows[0];
+							currentWindowRef = (WeakReference) windows[0];
 					}
+
+					window = currentWindowRef?.Target as NativeWindow;
 				}
 			}
 			return window;
@@ -195,6 +222,11 @@ namespace System.Windows.Forms
 		#region Protected Instance Methods
 		~NativeWindow()
 		{
+			if (window_handle != IntPtr.Zero)
+			{
+				RemoveFromTable(this);
+				XplatUI.DestroyWindow(window_handle);
+			}
 		}
 
 		protected virtual void OnHandleChange()
@@ -228,11 +260,14 @@ namespace System.Windows.Forms
 			
 			try {
 			object current = null;
+			WeakReference windowRef = null;
 			lock (window_collection) {
 				current = window_collection[hWnd];
 			}
 
-			window = current as NativeWindow;
+			windowRef = current as WeakReference;
+			window = windowRef?.Target as NativeWindow;
+			
 			if (current == null)
 				window = EnsureCreated (window, hWnd);
 
@@ -241,15 +276,27 @@ namespace System.Windows.Forms
 				result = m.Result;
 			} else if (current is ArrayList) {
 				ArrayList windows = (ArrayList) current;
-				lock (windows) {
+				lock (windows)
+				{
+					NativeWindow windowItem = null;
 					if (windows.Count > 0) {
-						window = EnsureCreated ((NativeWindow)windows[0], hWnd);
-						window.WndProc (ref m);
-						// the first one is the control's one. all others are synthetic,
-						// so we want only the result from the control
-						result = m.Result;
-						for (int i=1; i < windows.Count; i++)
-							((NativeWindow)windows[i]).WndProc (ref m);
+						windowRef = (WeakReference)windows[0];
+						windowItem = windowRef.Target as NativeWindow;
+
+						if (windowItem != null) {
+							window = EnsureCreated(windowItem, hWnd);
+							window.WndProc(ref m);
+
+							// the first one is the control's one. all others are synthetic,
+							// so we want only the result from the control
+							result = m.Result;
+							for (int i = 1; i < windows.Count; i++)
+							{
+								windowRef = (WeakReference)windows[i];
+								windowItem = windowRef.Target as NativeWindow;
+								windowItem?.WndProc(ref m);
+							}
+						}
 					}
 				}
 			} else {
