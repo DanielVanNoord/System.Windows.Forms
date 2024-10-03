@@ -91,6 +91,7 @@ namespace System.Windows.Forms {
 			// and name must be unique to process. If we load MWF into multiple appdomains
 			// and try to register same class name we fail.
 //			default_class_name = "SWFClass" + System.Threading.Thread.GetDomainID ().ToString ();
+			LibraryResolver.EnsureRegistered();
 
 			if (RunningOnUnix) {
 				//if (Environment.GetEnvironmentVariable ("not_supported_MONO_MWF_USE_NEW_X11_BACKEND") != null) {
