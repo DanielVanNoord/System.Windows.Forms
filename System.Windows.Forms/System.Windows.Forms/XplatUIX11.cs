@@ -5758,8 +5758,11 @@ namespace System.Windows.Forms {
 
 				lock (XlibLock) {
 					Control ctrl = Control.FromHandle (handle);
-					Size TranslatedSize = TranslateWindowSizeToXWindowSize (ctrl.GetCreateParams (), new Size (width, height));
-					MoveResizeWindow (DisplayHandle, hwnd.whole_window, x, y, TranslatedSize.Width, TranslatedSize.Height);
+					if (ctrl != null)
+					{
+						Size TranslatedSize = TranslateWindowSizeToXWindowSize (ctrl.GetCreateParams (), new Size (width, height));
+						MoveResizeWindow (DisplayHandle, hwnd.whole_window, x, y, TranslatedSize.Width, TranslatedSize.Height);
+					}
 					PerformNCCalc(hwnd);
 				}
 			}
