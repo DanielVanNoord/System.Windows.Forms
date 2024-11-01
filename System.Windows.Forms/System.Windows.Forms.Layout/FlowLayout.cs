@@ -277,7 +277,7 @@ namespace System.Windows.Forms.Layout
 			if (row.Count == 0) return 0;
 
 			int rowTop = int.MaxValue;
-			int rowBottom = 0;
+			int rowBottom = int.MinValue;
 			bool allDockFill = true;
 			bool noAuto = true;
 
