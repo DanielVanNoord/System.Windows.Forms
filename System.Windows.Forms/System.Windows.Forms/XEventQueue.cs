@@ -29,13 +29,14 @@
 using System;
 using System.Threading;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace System.Windows.Forms {
 
 	internal class XEventQueue {
 
-		private XQueue		xqueue;
-		private XQueue		lqueue;	// Events inserted from threads other then the main X thread
+		private Queue<XEvent>	xqueue;
+		private Queue<XEvent>	lqueue;	// Events inserted from threads other then the main X thread
 		private PaintQueue	paint;	// Paint-only queue
 		internal ArrayList	timer_list;
 		private Thread		thread;
@@ -48,8 +49,8 @@ namespace System.Windows.Forms {
 		private static readonly int InitialPaintSize = 50;
 
 		public XEventQueue (Thread thread) {
-			xqueue = new XQueue (InitialXEventSize);
-			lqueue = new XQueue (InitialLXEventSize);
+			xqueue = new Queue<XEvent> (InitialXEventSize);
+			lqueue = new Queue<XEvent> (InitialLXEventSize);
 			paint = new PaintQueue(InitialPaintSize);
 			timer_list = new ArrayList ();
 			this.thread = thread;
@@ -219,60 +220,6 @@ namespace System.Windows.Forms {
 						return xevent;
 					}
 				}
-			}
-		}
-
-		private class XQueue {
-
-			private XEvent [] xevents;
-			private int head;
-			private int tail;
-			private int size;
-			
-			public XQueue (int size)
-			{
-				xevents = new XEvent [size];
-			}
-
-			public int Count {
-				get { return size; }
-			}
-
-			public void Enqueue (XEvent xevent)
-			{
-				if (size == xevents.Length)
-					Grow ();
-				
-				xevents [tail] = xevent;
-				tail = (tail + 1) % xevents.Length;
-				size++;
-			}
-
-			public XEvent Dequeue ()
-			{
-				if (size < 1)
-					throw new Exception ("Attempt to dequeue empty queue.");
-				XEvent res = xevents [head];
-				head = (head + 1) % xevents.Length;
-				size--;
-				return res;
-			}
-
-			public XEvent Peek() {
-				if (size < 1) {
-					throw new Exception ("Attempt to peek at empty queue");
-				}
-				return xevents[head];
-			}
-
-			private void Grow ()
-			{
-				int newcap = (xevents.Length * 2);
-				XEvent [] na = new XEvent [newcap];
-				xevents.CopyTo (na, 0);
-				xevents = na;
-				head = 0;
-				tail = head + size;
 			}
 		}
 	}
