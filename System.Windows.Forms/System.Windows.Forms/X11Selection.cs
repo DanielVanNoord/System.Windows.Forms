@@ -167,9 +167,13 @@ namespace System.Windows.Forms {
 			}
 		}
 
-		internal virtual void HandleSelectionClearEvent (ref XEvent xevent) {
+		internal void ClearOwnSelection () {
 			Outgoing = null;
 			X11SelectionHandler.FreeNativeSelectionBuffers(Selection);
+		}
+
+		internal virtual void HandleSelectionClearEvent (ref XEvent xevent) {
+			ClearOwnSelection ();
 		}
 	}
 }

@@ -135,6 +135,7 @@ namespace System.Windows.Forms {
 
 		internal void Clear () {
 			XplatUIX11.XSetSelectionOwner (XplatUIX11.Display, Selection, IntPtr.Zero, UIntPtr.Zero);
+			ClearOwnSelection ();
 		}
 
 		internal IDataObject GetContent () {
