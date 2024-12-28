@@ -135,6 +135,10 @@ namespace System.Windows.Forms {
 		// Last window containing the pointer
 		static IntPtr		LastPointerWindow;	// The last window containing the pointer
 
+		// Fixes extension
+		int? fixesMajorVersion;
+		int HideCursorCount;
+
 		// Shape extension
 		bool? hasShapeExtension;
 
@@ -5269,6 +5273,31 @@ namespace System.Windows.Forms {
 			}
 		}
 
+		internal int FixesMajorVersion {
+			get {
+				if (!fixesMajorVersion.HasValue) {
+					try {
+						bool hasFixes = XFixesQueryExtension(DisplayHandle, out _, out _);
+
+						if (hasFixes) {
+							int major = 6, minor = 0;
+
+							XFixesQueryVersion(DisplayHandle, ref major, ref minor);
+
+							fixesMajorVersion = major;
+						} else {
+							fixesMajorVersion = 0;
+						}
+
+					} catch {
+						fixesMajorVersion = 0;
+					}
+				}
+
+				return fixesMajorVersion.Value;
+			}
+		}
+
 		internal bool HasShapeExtension {
 			get {
 				if (!hasShapeExtension.HasValue) {
@@ -5909,7 +5938,18 @@ namespace System.Windows.Forms {
 
 		internal override void ShowCursor(bool show)
 		{
-			;	// FIXME - X11 doesn't 'hide' the cursor. we could create an empty cursor
+			if (FixesMajorVersion >= 4) {
+				if (show) {
+					if (--HideCursorCount == 0) {
+						XFixesShowCursor (DisplayHandle, RootWindow);
+					}
+				}
+				else {
+					if (++HideCursorCount == 1) {
+						XFixesHideCursor (DisplayHandle, RootWindow);
+					}
+				}
+			}
 		}
 
 		internal override object StartLoop(Thread thread)
@@ -7018,6 +7058,36 @@ namespace System.Windows.Forms {
 		}
 #endregion
 
+#region Fixes extension imports
+		[DllImport("libXfixes", EntryPoint="XFixesQueryExtension")]
+		internal extern static bool _XFixesQueryExtension(IntPtr display, out int event_base, out int error_base);
+		internal static bool XFixesQueryExtension(IntPtr display, out int event_base, out int error_base) {
+			DebugHelper.TraceWriteLine (nameof(XFixesQueryExtension));
+			return _XFixesQueryExtension(display, out event_base, out error_base);
+		}
+
+		[DllImport("libXfixes", EntryPoint="XFixesQueryVersion")]
+		internal extern static int _XFixesQueryVersion(IntPtr display, ref int major_version, ref int minor_version);
+		internal static int XFixesQueryVersion(IntPtr display, ref int major_version, ref int minor_version) {
+			DebugHelper.TraceWriteLine (nameof(XFixesQueryVersion));
+			return _XFixesQueryVersion(display, ref major_version, ref minor_version);
+		}
+
+		[DllImport("libXfixes", EntryPoint="XFixesHideCursor")]
+		internal extern static void _XFixesHideCursor(IntPtr display, IntPtr window);
+		internal static void XFixesHideCursor(IntPtr display, IntPtr window) {
+			DebugHelper.TraceWriteLine (nameof(XFixesHideCursor));
+			_XFixesHideCursor(display, window);
+		}
+
+		[DllImport("libXfixes", EntryPoint="XFixesShowCursor")]
+		internal extern static void _XFixesShowCursor(IntPtr display, IntPtr window);
+		internal static void XFixesShowCursor(IntPtr display, IntPtr window) {
+			DebugHelper.TraceWriteLine (nameof(XFixesShowCursor));
+			_XFixesShowCursor(display, window);
+		}
+#endregion
+
 #region Shape extension imports
 		[DllImport("libXext", EntryPoint="XShapeQueryExtension")]
 		internal extern static bool _XShapeQueryExtension(IntPtr display, out int event_base, out int error_base);
@@ -7424,6 +7494,20 @@ namespace System.Windows.Forms {
 		[DllImport ("libX11", EntryPoint="XGetInputFocus")]
 		internal extern static void XGetInputFocus (IntPtr display, out IntPtr focus, out IntPtr revert_to);
 		#endregion
+
+#region Fixes extension imports
+		[DllImport("libXfixes")]
+		internal extern static bool XFixesQueryExtension(IntPtr display, out int event_base, out int error_base);
+
+		[DllImport("libXfixes")]
+		internal extern static int XFixesQueryVersion(IntPtr display, ref int major_version, ref int minor_version);
+
+		[DllImport("libXfixes")]
+		internal extern static void XFixesHideCursor(IntPtr display, IntPtr window);
+
+		[DllImport("libXfixes")]
+		internal extern static void XFixesShowCursor(IntPtr display, IntPtr window);
+#endregion
 
 #region Shape extension imports
 		[DllImport("libXext")]
