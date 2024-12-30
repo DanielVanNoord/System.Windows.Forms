@@ -594,7 +594,7 @@ namespace System.Windows.Forms
 			{
 				string printer, port = string.Empty, type = string.Empty;
 				string status = string.Empty, comment = string.Empty;
-				Type sysprn = Type.GetType ("System.Drawing.Printing.SysPrn, System.Drawing");
+				Type sysprn = Type.GetType ("System.Drawing.Printing.SysPrn, System.Drawing.Common");
 				MethodInfo dlg_info = sysprn.GetMethod ("GetPrintDialogInfo", BindingFlags.Static | BindingFlags.NonPublic);
 
 				printer = (string) printer_combo.SelectedItem;
