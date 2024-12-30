@@ -11,7 +11,7 @@
     <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
     <Company>None</Company>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
-    <Version>1.0.0-alpha5</Version>
+    <Version>1.0.0-alpha6</Version>
     <PackageId>Core.System.Drawing.Design</PackageId>
   </PropertyGroup>
 
