@@ -428,7 +428,7 @@ namespace System.Windows.Forms {
 				if ((DisplayHandle != IntPtr.Zero) && (FosterParent != IntPtr.Zero)) {
 					hwnd = Hwnd.ObjectFromHandle(FosterParent);
 					XDestroyWindow(DisplayHandle, FosterParent);
-					hwnd.Dispose();
+					hwnd?.Dispose();
 				}
 
 				if (DisplayHandle != IntPtr.Zero) {
@@ -1934,8 +1934,11 @@ namespace System.Windows.Forms {
 					DriverDebug (" + adding {0} to the list of zombie windows", XplatUI.Window (hwnd.Handle));
 					DriverDebug (" + parent X window is {0:X}", XGetParent (hwnd.whole_window).ToInt32());
 
-					list.Add (hwnd);
-					CleanupCachedWindows (hwnd);
+					if (hwnd != null)
+					{
+						list.Add(hwnd);
+						CleanupCachedWindows(hwnd);
+					}
 				}
 
 				for (int  i = 0; i < controls.Length; i ++) {
@@ -2504,15 +2507,18 @@ namespace System.Windows.Forms {
 
 		internal override void ClientToScreen(IntPtr handle, ref int x, ref int y)
 		{
-			int	dest_x_return;
-			int	dest_y_return;
+			int dest_x_return = 0;
+			int dest_y_return = 0;
 			IntPtr	child;
 			Hwnd	hwnd;
 
 			hwnd = Hwnd.ObjectFromHandle(handle);
 
-			lock (XlibLock) {
-				XTranslateCoordinates(DisplayHandle, hwnd.client_window, RootWindow, x, y, out dest_x_return, out dest_y_return, out child);
+			lock (XlibLock)
+			{
+				if (hwnd != null)
+					XTranslateCoordinates(DisplayHandle, hwnd.client_window, RootWindow, x, y, out dest_x_return,
+						out dest_y_return, out child);
 			}
 
 			x = dest_x_return;
@@ -4123,7 +4129,8 @@ namespace System.Windows.Forms {
 							leaveEvent.CrossingEvent.y = y;
 							leaveEvent.CrossingEvent.mode = NotifyMode.NotifyNormal;
 							Hwnd last_pointer_hwnd = Hwnd.ObjectFromHandle (LastPointerWindow);
-							last_pointer_hwnd.Queue.EnqueueLocked (leaveEvent);
+							if (last_pointer_hwnd != null) 
+								last_pointer_hwnd.Queue.EnqueueLocked(leaveEvent);
 						}
 					}
 
@@ -4491,9 +4498,10 @@ namespace System.Windows.Forms {
 			GetCursorPos (IntPtr.Zero, out x_root, out y_root);
 
 			Hwnd hwnd = Hwnd.ObjectFromHandle (handle);
-			SendNetWMMessage (hwnd.whole_window, _NET_WM_MOVERESIZE, (IntPtr) x_root, (IntPtr) y_root,
-					(IntPtr) NetWmMoveResize._NET_WM_MOVERESIZE_SIZE_BOTTOMRIGHT, 
-					(IntPtr) 1); // left button
+			if (hwnd == null) return;
+			SendNetWMMessage(hwnd.whole_window, _NET_WM_MOVERESIZE, (IntPtr)x_root, (IntPtr)y_root,
+				(IntPtr)NetWmMoveResize._NET_WM_MOVERESIZE_SIZE_BOTTOMRIGHT,
+				(IntPtr)1); // left button
 		}
 
 		internal override bool GetText(IntPtr handle, out string text)
@@ -4571,6 +4579,9 @@ namespace System.Windows.Forms {
 
 			hwnd = Hwnd.ObjectFromHandle(handle);
 
+			if (hwnd == null)
+				return (FormWindowState)(-1);
+
 			if (hwnd.cached_window_state == (FormWindowState)(-1))
 				hwnd.cached_window_state = UpdateWindowState (handle);
 
@@ -4590,6 +4601,9 @@ namespace System.Windows.Forms {
 			Hwnd			hwnd;
 
 			hwnd = Hwnd.ObjectFromHandle(handle);
+			
+			if (hwnd == null)
+				return (FormWindowState)(-1);
 
 			maximized = 0;
 			minimized = false;
@@ -4757,6 +4771,8 @@ namespace System.Windows.Forms {
 			Hwnd	hwnd;
 
 			hwnd = Hwnd.ObjectFromHandle(handle);
+			if (hwnd == null)
+				return;
 
 			lock (XlibLock) {
 				XTranslateCoordinates(DisplayHandle, hwnd.whole_window, RootWindow, x, y, out dest_x_return, out dest_y_return, out child);
@@ -4967,15 +4983,18 @@ namespace System.Windows.Forms {
 
 		internal override void ScreenToClient(IntPtr handle, ref int x, ref int y)
 		{
-			int	dest_x_return;
-			int	dest_y_return;
+			int dest_x_return = 0;
+			int	dest_y_return = 0;
 			IntPtr	child;
 			Hwnd	hwnd;
 
 			hwnd = Hwnd.ObjectFromHandle(handle);
 
-			lock (XlibLock) {
-				XTranslateCoordinates (DisplayHandle, RootWindow, hwnd.client_window, x, y, out dest_x_return, out dest_y_return, out child);
+			lock (XlibLock)
+			{
+				if (hwnd != null)
+					XTranslateCoordinates(DisplayHandle, RootWindow, hwnd.client_window, x, y, out dest_x_return,
+						out dest_y_return, out child);
 			}
 
 			x = dest_x_return;
@@ -4984,15 +5003,18 @@ namespace System.Windows.Forms {
 
 		internal override void ScreenToMenu(IntPtr handle, ref int x, ref int y)
 		{
-			int	dest_x_return;
-			int	dest_y_return;
+			int	dest_x_return = 0;
+			int	dest_y_return = 0;
 			IntPtr	child;
 			Hwnd	hwnd;
 
 			hwnd = Hwnd.ObjectFromHandle(handle);
 
-			lock (XlibLock) {
-				XTranslateCoordinates (DisplayHandle, RootWindow, hwnd.whole_window, x, y, out dest_x_return, out dest_y_return, out child);
+			lock (XlibLock)
+			{
+				if (hwnd != null)
+					XTranslateCoordinates(DisplayHandle, RootWindow, hwnd.whole_window, x, y, out dest_x_return,
+						out dest_y_return, out child);
 			}
 
 			Form form = Control.FromHandle (handle) as Form;
@@ -5038,6 +5060,8 @@ namespace System.Windows.Forms {
 			XGCValues	gc_values;
 
 			hwnd = Hwnd.ObjectFromHandle(handle);
+			if (hwnd == null)
+				return;
 
 			Rectangle r = Rectangle.Intersect (hwnd.Invalid, area);
 			if (!r.IsEmpty) {
@@ -5151,6 +5175,8 @@ namespace System.Windows.Forms {
 			XEvent	xevent = new XEvent ();
 
 			hwnd = Hwnd.ObjectFromHandle(method.Handle);
+			if (hwnd == null)
+				return;
 
 			xevent.type = XEventName.ClientMessage;
 			xevent.ClientMessageEvent.display = DisplayHandle;
@@ -5211,15 +5237,12 @@ namespace System.Windows.Forms {
 				xevent.type = (msg.message == Msg.WM_KEYUP ? XEventName.KeyRelease : XEventName.KeyPress);
 				xevent.KeyEvent.display = DisplayHandle;
 
-				if (hwnd != null) {
+				if (hwnd != null)
+				{
 					xevent.KeyEvent.window = hwnd.whole_window;
-				} else {
-					xevent.KeyEvent.window = IntPtr.Zero;
+					xevent.KeyEvent.keycode = Keyboard.ToKeycode((int)msg.wParam);
+					hwnd.Queue.EnqueueLocked(xevent);
 				}
-
-				xevent.KeyEvent.keycode = Keyboard.ToKeycode((int)msg.wParam);
-
-				hwnd.Queue.EnqueueLocked (xevent);
 			}
 			return count;
 		}
@@ -5377,9 +5400,9 @@ namespace System.Windows.Forms {
 
 				hwnd = Hwnd.ObjectFromHandle(handle);
 				lock (XlibLock) {
-					if (cursor != IntPtr.Zero) {
+					if (cursor != IntPtr.Zero && hwnd != null) {
 						XDefineCursor(DisplayHandle, hwnd.whole_window, cursor);
-					} else {
+					} else if (hwnd != null) {
 						XUndefineCursor(DisplayHandle, hwnd.whole_window);
 					}
 					XFlush(DisplayHandle);
@@ -5388,6 +5411,8 @@ namespace System.Windows.Forms {
 			}
 
 			hwnd = Hwnd.ObjectFromHandle(handle);
+			if (hwnd == null)
+				return;
 			lock (XlibLock) {
 				XDefineCursor(DisplayHandle, hwnd.whole_window, OverrideCursorHandle);
 			}
@@ -5489,6 +5514,8 @@ namespace System.Windows.Forms {
 				Hwnd	hwnd;
 
 				hwnd = Hwnd.ObjectFromHandle(handle);
+				if (hwnd == null)
+					return;
 				lock (XlibLock) {
 					XWarpPointer(DisplayHandle, IntPtr.Zero, hwnd.client_window, 0, 0, 0, 0, x, y);
 				}
@@ -5502,7 +5529,7 @@ namespace System.Windows.Forms {
 
 			hwnd = Hwnd.ObjectFromHandle(handle);
 
-			if (hwnd.client_window == FocusWindow) {
+			if (hwnd == null || hwnd.client_window == FocusWindow) {
 				return;
 			}
 
@@ -5537,7 +5564,8 @@ namespace System.Windows.Forms {
 			Hwnd	hwnd;
 
 			hwnd = Hwnd.ObjectFromHandle(handle);
-			hwnd.menu = menu;
+			if (hwnd != null)
+				hwnd.menu = menu;
 
 			RequestNCRecalc(handle);
 		}
@@ -5556,6 +5584,8 @@ namespace System.Windows.Forms {
 			}
 
 			Hwnd hwnd = Hwnd.ObjectFromHandle (handle);
+			if (hwnd == null)
+				return;
 			Control ctrl = Control.FromHandle (handle);
 			SetWMStyles (hwnd, ctrl.GetCreateParams ());
 		}
@@ -5565,6 +5595,8 @@ namespace System.Windows.Forms {
 			Hwnd	hwnd;
 
 			hwnd = Hwnd.ObjectFromHandle(handle);
+			if (hwnd == null)
+				return IntPtr.Zero;
 			hwnd.parent = Hwnd.ObjectFromHandle(parent);
 
 			lock (XlibLock) {
@@ -5594,6 +5626,8 @@ namespace System.Windows.Forms {
 		{
 
 			Hwnd hwnd = Hwnd.ObjectFromHandle(handle);
+			if (hwnd == null)
+				return true;
 			hwnd.topmost = enabled;
 
 			if (enabled) {
@@ -5622,6 +5656,8 @@ namespace System.Windows.Forms {
 			Hwnd hwnd;
 
 			hwnd = Hwnd.ObjectFromHandle(handle);
+			if (hwnd == null)
+				return true;
 
 			if (handle_owner != IntPtr.Zero) {
 				hwnd.owner = Hwnd.ObjectFromHandle(handle_owner);
@@ -5653,6 +5689,8 @@ namespace System.Windows.Forms {
 			Hwnd	hwnd;
 
 			hwnd = Hwnd.ObjectFromHandle(handle);
+			if (hwnd == null)
+				return true;
 			hwnd.visible = visible;
 
 			lock (XlibLock) {
@@ -5805,6 +5843,8 @@ namespace System.Windows.Forms {
 			Hwnd		hwnd;
 
 			hwnd = Hwnd.ObjectFromHandle(handle);
+			if (hwnd == null)
+				return;
 
 			current_state = GetWindowState(handle);
 
@@ -5854,6 +5894,8 @@ namespace System.Windows.Forms {
 			Hwnd	hwnd;
 
 			hwnd = Hwnd.ObjectFromHandle(handle);
+			if (hwnd == null)
+				return;
 			SetHwndStyles(hwnd, cp);
 			SetWMStyles(hwnd, cp);
 		}
@@ -5888,7 +5930,7 @@ namespace System.Windows.Forms {
 		{
 			Hwnd	hwnd = Hwnd.ObjectFromHandle(handle);
 
-			if (!hwnd.mapped) {
+			if (hwnd == null || !hwnd.mapped) {
 				return false;
 			}
 
@@ -5973,6 +6015,11 @@ namespace System.Windows.Forms {
 				Hwnd		hwnd;
 
 				hwnd = Hwnd.ObjectFromHandle(handle);
+				if (hwnd == null)
+				{
+					tt = null;
+					return false;
+				}
 				DriverDebug("Adding Systray Whole:{0:X}, Client:{1:X}", hwnd.whole_window.ToInt32(), hwnd.client_window.ToInt32());
 
 				// Oh boy.
@@ -6076,6 +6123,8 @@ namespace System.Windows.Forms {
 		internal override bool Text(IntPtr handle, string text)
 {
 			Hwnd hwnd = Hwnd.ObjectFromHandle(handle);
+			if (hwnd == null)
+				return true;
             var classHints = new XClassHint
             {
                 res_name = text,
@@ -6091,7 +6140,7 @@ namespace System.Windows.Forms {
 				// text if it's latin-1, or convert it
 				// to compound text if it's in a
 				// different charset.
-				XStoreName(DisplayHandle, Hwnd.ObjectFromHandle(handle).whole_window, text);
+				XStoreName(DisplayHandle, hwnd.whole_window, text);
 
 				XSetClassHint(DisplayHandle, hwnd.whole_window, ref classHints);
 			}
@@ -6110,7 +6159,7 @@ namespace System.Windows.Forms {
 
 			hwnd = Hwnd.ObjectFromHandle(handle);
 
-			if (!hwnd.visible || !hwnd.expose_pending || !hwnd.Mapped) {
+			if (hwnd == null || !hwnd.visible || !hwnd.expose_pending || !hwnd.Mapped) {
 				return;
 			}
 
