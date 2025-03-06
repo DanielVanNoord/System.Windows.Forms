@@ -5308,13 +5308,8 @@ namespace System.Windows.Forms
 
 			public int IndexOf (ListViewItem item)
 			{
-				if (owner != null && owner.VirtualMode) {
-					for (int i = 0; i < Count; i++)
-						if (RetrieveVirtualItemFromOwner (i) == item)
-							return i;
-
-					return -1;
-				}
+				if (owner != null && owner.VirtualMode)
+					return item.Index;
 				
 				return list.IndexOf (item);
 			}
