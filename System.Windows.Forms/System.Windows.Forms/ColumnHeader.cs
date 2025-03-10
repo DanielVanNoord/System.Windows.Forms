@@ -371,6 +371,12 @@ namespace System.Windows.Forms
 		#region Protected Methods
 		protected override void Dispose (bool disposing)
 		{
+			if (disposing) {
+				if (this.format != null)
+					format.Dispose();
+				this.format = null;
+			}
+
 			base.Dispose (disposing);
 		}
 		#endregion // Protected Methods
