@@ -1182,7 +1182,7 @@ namespace System.Windows.Forms {
 			if (control == null || !control.IsHandleCreated)
 				return;
 			Hwnd hwnd = Hwnd.ObjectFromHandle (client_window);
-			if (!hwnd.mapped)
+			if (hwnd == null || !hwnd.mapped)
 				return;
 
 			int dx, dy;
