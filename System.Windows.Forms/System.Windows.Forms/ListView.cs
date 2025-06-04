@@ -77,7 +77,12 @@ namespace System.Windows.Forms
 		private readonly SelectedListViewItemCollection selected_items;
 		private SortOrder sort_order = SortOrder.None;
 		private ImageList state_image_list;
-		internal bool updating;
+
+		internal bool updating
+		{
+			get { return _cntBeginUpdate > 0; }
+		}
+
 		private View view = View.LargeIcon;
 		private int layout_wd;    // We might draw more than our client area
 		private int layout_ht;    // therefore we need to have these two.
@@ -108,6 +113,7 @@ namespace System.Windows.Forms
 		// selection is available after the first time the handle is created, *even* if later
 		// the handle is either recreated or destroyed - so keep this info around.
 		private bool is_selection_available;
+		private int _cntBeginUpdate = 0;
 
 		// internal variables
 		internal ImageList large_image_list;
@@ -3646,7 +3652,7 @@ namespace System.Windows.Forms
 		public void BeginUpdate ()
 		{
 			// flag to avoid painting
-			updating = true;
+			_cntBeginUpdate++;
 		}
 
 		public void Clear ()
@@ -3658,7 +3664,7 @@ namespace System.Windows.Forms
 		public void EndUpdate ()
 		{
 			// flag to avoid painting
-			updating = false;
+			_cntBeginUpdate--;
 
 			// probably, now we need a redraw with recalculations
 			this.Redraw (true);
