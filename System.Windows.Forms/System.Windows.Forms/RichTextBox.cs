@@ -2217,9 +2217,10 @@ namespace System.Windows.Forms {
 			catch (RTF.RTFException e) {
 #if DEBUG
 				throw e;
-#endif
+#else
 				// Seems to be plain text or broken RTF
 				Console.WriteLine("RTF Parsing failure: {0}", e.Message);
+#endif
 			}                     
 
 			to_x = rtf_cursor_x;
