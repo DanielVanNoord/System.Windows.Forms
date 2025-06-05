@@ -80,7 +80,7 @@ namespace System.Windows.Forms
 
 		internal bool updating
 		{
-			get { return _cntBeginUpdate > 0; }
+			get { return _cntBeginUpdate != 0; }
 		}
 
 		private View view = View.LargeIcon;
