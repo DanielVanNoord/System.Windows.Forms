@@ -2427,7 +2427,7 @@ namespace System.Windows.Forms {
 													  DataGridViewDataErrorContexts.Commit);
 				OnDataError (false, args);
 				if (args.ThrowException)
-					throw e;
+					throw;
 				return false;
 			}
 			return true;

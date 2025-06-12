@@ -489,8 +489,21 @@ Example */
 			return Name + ", Index: " + base.Index.ToString() + ".";
 		}
 
-		protected override void Dispose (bool disposing) {
-			if (disposing) {
+		protected override void Dispose (bool disposing)
+		{
+			try
+			{
+				if (disposing)
+				{
+					if (Disposed != null)
+					{
+						Disposed(this, EventArgs.Empty);
+					}
+				}
+			}
+			finally
+			{
+				base.Dispose(disposing);
 			}
 		}
 

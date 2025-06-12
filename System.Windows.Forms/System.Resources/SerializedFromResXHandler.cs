@@ -123,7 +123,7 @@ namespace System.Resources {
 				if (ex.Message.StartsWith ("Couldn't find assembly"))
 					throw new ArgumentException (ex.Message);
 				else
-					throw ex;
+					throw;
 			}
 		}
 

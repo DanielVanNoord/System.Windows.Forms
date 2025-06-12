@@ -2212,16 +2212,16 @@ namespace System.Windows.Forms {
 					}
 				}
 			}
-
-
-			catch (RTF.RTFException e) {
 #if DEBUG
-				throw e;
-#endif
+			catch (RTF.RTFException) {
+				throw;
+			}
+#else
+			catch (RTF.RTFException e) {
 				// Seems to be plain text or broken RTF
 				Console.WriteLine("RTF Parsing failure: {0}", e.Message);
-			}                     
-
+			}
+#endif
 			to_x = rtf_cursor_x;
 			to_y = rtf_cursor_y;
 			chars = rtf_chars;
