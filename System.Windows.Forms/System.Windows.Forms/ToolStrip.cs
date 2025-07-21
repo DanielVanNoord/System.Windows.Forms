@@ -33,7 +33,6 @@ using System.Drawing;
 using System.Windows.Forms.Layout;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
-using System.Threading;
 
 namespace System.Windows.Forms
 {
@@ -78,7 +77,7 @@ namespace System.Windows.Forms
 
 		private ToolStripItem mouse_currently_over;
 		internal bool menu_selected;
-		private volatile ToolStripItem tooltip_currently_showing;
+		private ToolStripItem tooltip_currently_showing;
 		private ToolTip.TipState tooltip_state;
 
 		const int InitialToolTipDelay = 500;
@@ -1592,7 +1591,7 @@ namespace System.Windows.Forms
 				tooltip_state = ToolTip.TipState.Show;
 			}
 
-			Volatile.Read(ref tooltip_currently_showing)?.FireEvent (EventArgs.Empty, ToolStripItemEventType.MouseHover);
+			tooltip_currently_showing?.FireEvent (EventArgs.Empty, ToolStripItemEventType.MouseHover);
 		}
 
 		private void ToolTipTimer_Tick (object o, EventArgs args)
