@@ -11,12 +11,11 @@ internal class LibraryResolver
         NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), DllImportResolver);
     }
 
-
     public static readonly Dictionary<string, string> DllMap = new()
     {
         { "libX11", "libX11.so.6" },
         { "libXcursor", "libXcursor.so.1" },
-        { "libglib-2.0.so", "libglib-2.0.so.0" },
+        { "libglib-2.0", "libglib-2.0.so.0" },
         { "libgobject-2.0.so", "libgobject-2.0.so.0" },
         { "libgobject-2.0", "libgobject-2.0.so.0" },
         { "libgdk-x11-2.0.so", "libgdk-x11-2.0.so.0" },
@@ -25,7 +24,9 @@ internal class LibraryResolver
         { "libgtk-x11-2.0", "libgtk-x11-2.0.so.0" },
         { "libgdk_pixbuf-2.0.so", "libgdk_pixbuf-2.0.so.0" },
         { "libgdk_pixbuf-2.0", "libgdk_pixbuf-2.0.so.0" },
-        { "libXinerama", "libXinerama.so.1" }
+        { "libXinerama", "libXinerama.so.1" },
+        { "librsvg-2", "librsvg-2.so.2" },
+        { "libXext", "libXext.so.6"}
     };
 
     private static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
