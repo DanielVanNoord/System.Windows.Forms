@@ -46,7 +46,7 @@ namespace System.Windows.Forms {
 
 		#region Constructors
 		static Locale () {
-		        rm = new ResourceManager("System.Windows.Forms", Assembly.GetExecutingAssembly());
+		        rm = new ResourceManager("System.Windows.Forms.resources.System.Windows.Forms", Assembly.GetExecutingAssembly());
 		}
 		#endregion
 
