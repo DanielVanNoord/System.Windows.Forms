@@ -172,14 +172,6 @@
     <value>User Colors</value>
   </data>
   
-  <!-- System.Windows.Forms/ComboBox.cs -->
-  <data name="Enum argument value '{0}' is not valid for AutoCompleteMode" xml:space="preserve">
-    <value>Enum argument value '{0}' is not valid for AutoCompleteMode </value>
-  </data>
-  <data name="Enum argument value '{0}' is not valid for AutoCompleteSource" xml:space="preserve">
-    <value>Enum argument value '{0}' is not valid for AutoCompleteSource</value>
-  </data>
-  
   <!-- System.Windows.Forms/MessageBox.cs -->
   <data name="OK">
     <value>OK</value>
