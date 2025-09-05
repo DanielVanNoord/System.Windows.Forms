@@ -3733,20 +3733,6 @@ namespace System.Windows.Forms {
 				}
 			}
 
-			if (xevent.type == XEventName.ClientMessage &&
-				xevent.ClientMessageEvent.message_type == (IntPtr)PostAtom &&
-				(Msg)xevent.ClientMessageEvent.ptr2.ToInt32() == Msg.WM_QUIT)
-			{
-				DebugHelper.Indent ();
-				DebugHelper.WriteLine (String.Format ("Got WM_QUIT"));
-				DebugHelper.Unindent ();
-				msg.hwnd = IntPtr.Zero;
-				msg.message = Msg.WM_QUIT;
-				msg.wParam = xevent.ClientMessageEvent.ptr3;
-				msg.lParam = xevent.ClientMessageEvent.ptr2;
-				return false;
-			}
-
 			hwnd = Hwnd.GetObjectFromWindow(xevent.AnyEvent.window);
 
 #if DriverDebugDestroy			
