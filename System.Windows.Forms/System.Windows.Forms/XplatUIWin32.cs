@@ -3223,15 +3223,16 @@ namespace System.Windows.Forms {
 		}
 
 		internal override SizeF GetAutoScaleSize(Font font) {
-			Graphics	g;
 			float		width;
 			string		magic_string = "The quick brown fox jumped over the lazy dog.";
 			double		magic_number = 44.549996948242189;
 
-			g = Graphics.FromHwnd(GetFosterParent());
+			using (Graphics g = Graphics.FromHwnd(GetFosterParent()))
+			{
 
-			width = (float) (g.MeasureString (magic_string, font).Width / magic_number);
-			return new SizeF(width, font.Height);
+				width = (float)(g.MeasureString(magic_string, font).Width / magic_number);
+				return new SizeF(width, font.Height);
+			}
 		}
 
 		internal override IntPtr SendMessage (IntPtr hwnd, Msg message, IntPtr wParam, IntPtr lParam) {
