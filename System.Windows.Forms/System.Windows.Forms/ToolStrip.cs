@@ -1591,7 +1591,7 @@ namespace System.Windows.Forms
 				tooltip_state = ToolTip.TipState.Show;
 			}
 
-			tooltip_currently_showing.FireEvent (EventArgs.Empty, ToolStripItemEventType.MouseHover);
+			tooltip_currently_showing?.FireEvent (EventArgs.Empty, ToolStripItemEventType.MouseHover);
 		}
 
 		private void ToolTipTimer_Tick (object o, EventArgs args)
