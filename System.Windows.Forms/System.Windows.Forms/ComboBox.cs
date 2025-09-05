@@ -2741,10 +2741,9 @@ namespace System.Windows.Forms
 					return;
 				}
 
-				if (index == -1) {
-					HideWindow ();
+				HideWindow ();
+				if (index == -1)
 					return;
-				}
 
 				bool is_change = owner.SelectedIndex != index;
 				
@@ -2757,8 +2756,6 @@ namespace System.Windows.Forms
 					owner.OnSelectedValueChanged (EventArgs.Empty);
 					owner.OnSelectedIndexChanged (EventArgs.Empty);
 				}
-				
-				HideWindow ();
 			}
 
 			internal override void OnPaintInternal (PaintEventArgs pevent)
