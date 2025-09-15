@@ -25,6 +25,7 @@
 //
 
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Reflection;
@@ -60,7 +61,7 @@ namespace System.Windows.Forms
 		private Hashtable pens = new Hashtable ();
 		private Hashtable dashpens = new Hashtable ();
 		private Hashtable sizedpens = new Hashtable ();
-		private Hashtable solidbrushes = new Hashtable ();
+		private ConcurrentDictionary<int, SolidBrush> solidbrushes = new ConcurrentDictionary<int, SolidBrush> ();
 		private Hashtable hatchbrushes = new Hashtable ();
 		private Hashtable uiImages = new Hashtable();
 		private Hashtable cpcolors = new Hashtable ();
@@ -115,18 +116,21 @@ namespace System.Windows.Forms
 		
 		public SolidBrush GetSolidBrush (Color color)
 		{
-			int hash = color.ToArgb ();
+			int key = color.ToArgb ();
 
-			lock (solidbrushes) {
-				SolidBrush res = solidbrushes [hash] as SolidBrush;
-				if (res != null)
-					return res;
-			
-				SolidBrush brush = new SolidBrush (color);
-				solidbrushes.Add (hash, brush);
-				return brush;
+			if (solidbrushes.TryGetValue (key, out var result))
+				return result;
+
+			result = new SolidBrush (color);
+
+			if (!solidbrushes.TryAdd (key, result))
+			{
+				result.Dispose ();
+				return solidbrushes [key];
 			}
-		}		
+
+			return result;
+		}
 		
 		public HatchBrush GetHatchBrush (HatchStyle hatchStyle, Color foreColor, Color backColor)
 		{
