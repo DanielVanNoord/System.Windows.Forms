@@ -392,6 +392,9 @@ namespace System.Windows.Forms
 				borders_and_paddings.Height += border_style == BorderStyle.None ? 3 : 6;
 			}
 
+			if (MaximumSize.Width > 0 && (proposed.Width < 1 || proposed.Width > MaximumSize.Width))
+				proposed.Width = MaximumSize.Width;
+
 			if (Text == string.Empty) {
 				size = new Size (0, Font.Height);
 			} else {
