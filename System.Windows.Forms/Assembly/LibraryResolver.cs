@@ -44,7 +44,7 @@ internal class LibraryResolver
             return IntPtr.Zero;
         }
 
-        var result = (MonoLibraryResolver.UserDllImportResolver(libraryName, assembly, searchPath);
+        var result = MonoLibraryResolver.UserDllImportResolver(libraryName, assembly, searchPath);
         if (result != IntPtr.Zero)
         {
             return result;
@@ -69,4 +69,5 @@ public static class MonoLibraryResolver
 
     public static DllImportResolver? UserDllImportResolver { get; set; }
 }
+
 
