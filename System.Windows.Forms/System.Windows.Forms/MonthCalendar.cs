@@ -21,9 +21,6 @@
 //
 // Authors:
 //	John BouAntoun	jba-mono@optusnet.com.au
-//
-// REMAINING TODO:
-//	- get the date_cell_size and title_size to be pixel perfect match of SWF
 
 using System;
 using System.Collections;
@@ -711,8 +708,21 @@ namespace System.Windows.Forms {
 				int column_count = (ShowWeekNumbers) ? 8 : 7;
 				int row_count = 7;		// not including the today date
 
-				// set the date_cell_size and the title_size
-				date_cell_size = new Size ((int) Math.Ceiling (1.8 * multiplier), multiplier);
+				// Calculate date_cell_size
+ 				int maxWidth = 0;
+ 				int maxHeight = 0;
+ 				DateTime dt = new DateTime(0, DateTimeKind.Utc);
+ 
+ 				for (int day = 0; day < 7; day++)
+ 				{
+ 					string dayStr = dt.AddDays(day).ToString("ddd");
+ 					Size textSize = TextRenderer.MeasureText(dayStr, this.Font);
+ 					maxWidth = Math.Max(maxWidth, textSize.Width);
+ 					maxHeight = Math.Max(maxHeight, textSize.Height);
+ 				}
+ 
+ 				date_cell_size = new Size(maxWidth + 2, maxHeight + 2);
+				
 				title_size = new Size ((date_cell_size.Width * column_count), 2 * multiplier);
 
 				return new Size (column_count * date_cell_size.Width, row_count * date_cell_size.Height + title_size.Height);
