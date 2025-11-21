@@ -721,7 +721,7 @@ namespace System.Windows.Forms {
  					maxHeight = Math.Max(maxHeight, textSize.Height);
  				}
  
- 				date_cell_size = new Size(maxWidth + 2, maxHeight + 2);
+ 				date_cell_size = new Size(maxWidth, maxHeight);
 				
 				title_size = new Size ((date_cell_size.Width * column_count), 2 * multiplier);
 
